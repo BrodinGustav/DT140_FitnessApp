@@ -1,11 +1,4 @@
-package service;
-
-import model.Activity;
-import model.User;
-import model.UserActivity;
-import repository.ActivityRepository;
-import repository.UserActivityRepository;
-import repository.UserRepository;
+package com.example.App.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +6,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dto.UserActivityDTO;
+import com.example.App.dto.UserActivityDTO;
+import com.example.App.model.Activity;
+import com.example.App.model.User;
+import com.example.App.model.UserActivity;
+import com.example.App.repository.ActivityRepository;
+import com.example.App.repository.UserActivityRepository;
+import com.example.App.repository.UserRepository;
 
 @Service
 public class FitnessService {
@@ -51,3 +50,6 @@ public class FitnessService {
         }).collect(Collectors.toList());
     }
 }
+ 
+    
+

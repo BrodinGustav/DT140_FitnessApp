@@ -1,12 +1,12 @@
-package controller;
-
-import service.FitnessService;
+package com.example.App.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import dto.UserActivityDTO;
+
+import com.example.App.dto.UserActivityDTO;
+import com.example.App.service.FitnessService;
 
 @RestController
 @RequestMapping("/api/fitness")

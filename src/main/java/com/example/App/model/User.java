@@ -1,38 +1,33 @@
-package model;
+package com.example.App.model;
+
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
-import java.util.List;
-
 @Entity
-public class Activity {
-
-    //Properties
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    //Properties
+
     private Integer id;
 
     private String name;
-    private int points;
 
-    //Relationer
     
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    //Relationer 
 
-    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserActivity> userActivities;
 
-
+    
     // Getters and setters
     
     public Integer getId() {
@@ -51,22 +46,6 @@ public class Activity {
         this.name = name;
     }
 
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public List<UserActivity> getUserActivities() {
         return userActivities;
     }
@@ -75,3 +54,4 @@ public class Activity {
         this.userActivities = userActivities;
     }
 }
+

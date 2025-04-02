@@ -1,14 +1,15 @@
-package dto;
+package com.example.App.dto;
 
-public class CategoryDTO {
- 
+public class UserDTO {
+
     //Properties
 
     private Integer id;
     private String name;
 
+    
     // Getters and setters
-
+    
     public Integer getId() {
         return id;
     }
@@ -24,5 +25,5 @@ public class CategoryDTO {
     public void setName(String name) {
         this.name = name;
     }
+    
 }
-
