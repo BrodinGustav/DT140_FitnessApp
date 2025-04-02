@@ -27,8 +27,10 @@ public class FitnessService {
     private UserActivityRepository userActivityRepository;
 
     public void addActivityForUser(UserActivityDTO userActivityDTO) {
-        User user = userRepository.findById(userActivityDTO.getUserId()).orElseThrow(() -> new RuntimeException("Användare hittades ej"));
-        Activity activity = activityRepository.findById(userActivityDTO.getActivityId()).orElseThrow(() -> new RuntimeException("Aktivitet hittades ej"));
+        User user = userRepository.findById(userActivityDTO.getUserId())
+                .orElseThrow(() -> new RuntimeException("Användare hittades ej"));
+        Activity activity = activityRepository.findById(userActivityDTO.getActivityId())
+                .orElseThrow(() -> new RuntimeException("Aktivitet hittades ej"));
 
         UserActivity userActivity = new UserActivity();
         userActivity.setUser(user);
@@ -40,16 +42,30 @@ public class FitnessService {
 
     public List<UserActivityDTO> getUserActivities(Integer userId) {
         List<UserActivity> userActivities = userActivityRepository.findByUserId(userId);
+
+        // debugg
+        System.out.println("Antal aktiviteter hittade för userId " + userId + ": " + userActivities.size());
+
         return userActivities.stream().map(userActivity -> {
             UserActivityDTO dto = new UserActivityDTO();
             dto.setId(userActivity.getId());
             dto.setUserId(userActivity.getUser().getId());
             dto.setActivityId(userActivity.getActivity().getId());
             dto.setPoints(userActivity.getPoints());
+
+            // Hämta användarens namn
+            String userName = userActivity.getUser().getName();
+            dto.setUserName(userName); 
+
+            // Hämta aktivitetens namn
+            String activityName = userActivity.getActivity().getName(); 
+            dto.setActivityName(activityName); 
+
+            // Hämta category
+            String category = userActivity.getActivity().getCategory().getName(); 
+            dto.setCategory(category);
+
             return dto;
         }).collect(Collectors.toList());
     }
 }
- 
-    
-
