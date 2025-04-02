@@ -23,6 +23,20 @@ public class Activity {
     private String name;
     private int points;
 
+
+    //Konstruktor
+
+    protected Activity() {
+        //Standard konstruktor enligt JPA
+    }
+
+    public Activity(String name, Integer points) {
+        this.name = name;
+        this.points = points;
+        }
+
+
+
     //Relationer
     
     @ManyToOne
@@ -74,4 +88,71 @@ public class Activity {
     public void setUserActivities(List<UserActivity> userActivities) {
         this.userActivities = userActivities;
     }
+
+
+
+    
+    @Override
+    public String toString() {
+        return "Activity [id=" + id + ", name=" + name + ", points=" + points + ", category=" + category
+                + ", userActivities=" + userActivities + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + points;
+        result = prime * result + ((category == null) ? 0 : category.hashCode());
+        result = prime * result + ((userActivities == null) ? 0 : userActivities.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Activity other = (Activity) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (points != other.points)
+            return false;
+        if (category == null) {
+            if (other.category != null)
+                return false;
+        } else if (!category.equals(other.category))
+            return false;
+        if (userActivities == null) {
+            if (other.userActivities != null)
+                return false;
+        } else if (!userActivities.equals(other.userActivities))
+            return false;
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }
