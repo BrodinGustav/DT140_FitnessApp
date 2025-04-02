@@ -18,11 +18,22 @@ public class CategoryService {
     }
 
     public Category getCategoryById(Integer id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
+        return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Kategori hittades inte"));
     }
 
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
+    }
+
+    public Category updateCategory(Integer id, Category categoryDetails) {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Kategori hittades inte"));
+    
+        category.setName(categoryDetails.getName());
+        return categoryRepository.save(category);
+    }
+    
+    public void deleteCategory(Integer id) {
+        categoryRepository.deleteById(id);
     }
 }
 

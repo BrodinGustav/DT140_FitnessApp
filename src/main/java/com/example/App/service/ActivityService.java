@@ -25,4 +25,16 @@ public class ActivityService {
         return activityRepository.findAll();
     }
 
+    public Activity updateActivity(Integer id, Activity activityDetails) {
+        Activity activity = activityRepository.findById(id).orElseThrow(() -> new RuntimeException("Aktivitet hittade ej"));
+
+        activity.setName(activityDetails.getName());
+        activity.setPoints(activityDetails.getPoints());
+        return activityRepository.save(activity);
+    }
+
+    public void deleteActivity(Integer id) {
+        activityRepository.deleteById(id);
+    }
+
 }

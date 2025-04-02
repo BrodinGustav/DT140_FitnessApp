@@ -27,5 +27,15 @@ public class ActivityController {
     public List<Activity> getAllActivities() {
         return activityService.getAllActivities();
     }
+
+        @PutMapping("/{id}")
+        public Activity updateActivity(@PathVariable Integer id, @RequestBody Activity activityDetails) {
+        return activityService.updateActivity(id, activityDetails);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteActivity(@PathVariable Integer id) {
+    activityService.deleteActivity(id);
+}
 }
 

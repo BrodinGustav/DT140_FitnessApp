@@ -21,6 +21,8 @@ public class User {
 
     private String name;
 
+    private String email;
+
     
     //Relationer 
 
@@ -52,6 +54,14 @@ public class User {
 
     public void setUserActivities(List<UserActivity> userActivities) {
         this.userActivities = userActivities;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
 

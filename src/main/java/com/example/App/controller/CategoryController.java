@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
-    
+
     @Autowired
     private CategoryService categoryService;
 
@@ -27,5 +27,15 @@ public class CategoryController {
     @GetMapping
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
+    }
+
+    @PutMapping("/{id}")
+    public Category updateCategory(@PathVariable Integer id, @RequestBody Category categoryDetails) {
+        return categoryService.updateCategory(id, categoryDetails);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable Integer id) {
+        categoryService.deleteCategory(id);
     }
 }
