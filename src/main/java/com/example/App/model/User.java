@@ -2,6 +2,8 @@ package com.example.App.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +24,12 @@ public class User {
     private String name;
 
     private String email;
+
+     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //Undviker att lösenordet inkluderas i JSON-svaret 
+    private String password;
+
+    private String role;
+
 
     
     //Konstruktor
@@ -75,7 +83,21 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     
     @Override

@@ -1,48 +1,82 @@
 package com.example.App.security;
 
+import com.example.App.repository.UserRepository;
+import com.example.App.service.MyUserDetailsService;
+
+import java.beans.Customizer;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import static org.springframework.security.config.Customizer.withDefaults;
 
-@Configuration
+import jakarta.servlet.http.HttpServletResponse;
+
+@Configuration // Marks this as a configuration file
+@EnableWebSecurity // Enables security for this application
 public class SecurityConfig {
+
+    // Injecting Dependencies
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private JWTFilter filter;
+    @Autowired
+    private MyUserDetailsService uds;
+
+   
+    // Method to configure your app security
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/users/create").permitAll()  //Tillåter alla att registrera sig
-                .requestMatchers("/api/users").permitAll()  //Tillåter alla att hämta alla användare
-                .requestMatchers("/api/users/{id}").permitAll()  //Tillåter PUT och DELETE 
+        return http
+                .csrf(csrf -> csrf.disable()) // Stänger av CSRF-skydd
+                .cors(cors -> {}) // Aktiverar CORS
 
-                .requestMatchers("/api/activities/create").permitAll()  //Tillåter alla att registrera aktiviteter
-                .requestMatchers("/api/activities").permitAll()  //Tillåter alla att hämta alla aktiviteter
-                .requestMatchers("/api/activities/{id}").permitAll()  //Tillåter PUT och DELETE 
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").permitAll()  // Tillåter ej autentiserade anrop
+                        .requestMatchers("/api/user/**").hasRole("USER") // Kräver "USER"-roll
+                        .anyRequest().authenticated() // Alla andra requests kräver autentisering
+                )
 
-                .requestMatchers("/api/categories/create").permitAll()  
-                .requestMatchers("/api/categories").permitAll()  
-                .requestMatchers("/api/categories/{id}").permitAll()  
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Stateless sessionhantering
+                )
 
-                .requestMatchers("/api/fitness/addActivityForUser").permitAll()  
-                .requestMatchers("/api/userActivities").permitAll()  
-                .requestMatchers("/api/fitness/{id}").permitAll()  
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint((request, response, authException) -> 
+                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
+                )
 
-
-                .anyRequest().authenticated()
-            )
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        return http.build();
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class) // Lägg till JWT-filter
+                .userDetailsService(uds) // Använd UserDetailsService
+                .httpBasic(httpBasic -> {}) // Aktivera HTTP Basic Authentication
+                .build();
     }
 
+    // Creating a bean for the password encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    // Exposing the bean of the authentication manager which will be used to run the
+    // authentication process
+   @Bean
+public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    return authenticationConfiguration.getAuthenticationManager();
+}
+
 }

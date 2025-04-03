@@ -1,6 +1,7 @@
 package com.example.App.controller;
 
 import com.example.App.model.User;
+import com.example.App.repository.UserRepository;
 import com.example.App.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +20,9 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    @Autowired private UserService userService;
+    @Autowired private UserRepository userRepository;
+
 
     @PostMapping("/create")
  
@@ -77,6 +80,16 @@ public class UserController {
     public void deleteUser(@PathVariable Integer id) {
     userService.deleteUser(id);
 }
+
+    //Säkra rutter
+    @GetMapping("/info")
+    public User getUserDetails(){
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userRepository.findByEmail(email).get();
+    }
+
+
+
 
  }
 
