@@ -1,11 +1,18 @@
 package com.example.App.model;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class UserActivity {
@@ -15,20 +22,21 @@ public class UserActivity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    private int points;
+    @CreationTimestamp
+    private LocalDateTime timestamp;
 
     //Relationer
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
-    private int points;
-
+   
 
     // Getters and setters
     
@@ -48,12 +56,17 @@ public class UserActivity {
         this.user = user;
     }
 
+         public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+
     public Activity getActivity() {
         return activity;
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public Activity setActivity(Activity activity) {
+        return this.activity = activity;
     }
 
     public int getPoints() {

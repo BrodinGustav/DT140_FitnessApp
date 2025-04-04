@@ -32,7 +32,7 @@ public class UserActivityController {
         userActivityService.addActivityForUser(userActivityDTO);
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
 
     @Operation(summary = "Hämtar användaraktivitet", description = "Hämtar användaraktivitet från databasen.")
     @ApiResponse(responseCode = "201", description = "Användaraktivitet hämtade",

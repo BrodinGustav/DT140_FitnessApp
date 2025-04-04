@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
-import java.util.List;
 
 @Entity
 public class Category {
@@ -36,8 +35,6 @@ public class Category {
     //Relationer
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Activity> activities;
-
     
     // Getters and setters
     
@@ -56,20 +53,11 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-
-    public List<Activity> getActivities() {
-        return activities;
-    }
-
-    public void setActivities(List<Activity> activities) {
-        this.activities = activities;
-    }
-
     
-
+ 
     @Override
     public String toString() {
-        return "Category [id=" + id + ", name=" + name + ", activities=" + activities + "]";
+        return "Category [id=" + id + ", name=" + name + ", activities=" + "]";
     }
 
     @Override
@@ -78,7 +66,6 @@ public class Category {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((activities == null) ? 0 : activities.hashCode());
         return result;
     }
 
@@ -101,14 +88,8 @@ public class Category {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (activities == null) {
-            if (other.activities != null)
-                return false;
-        } else if (!activities.equals(other.activities))
-            return false;
         return true;
     }
-
 
     
 }

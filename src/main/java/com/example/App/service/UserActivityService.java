@@ -26,6 +26,7 @@ public class UserActivityService {
     @Autowired
     private UserActivityRepository userActivityRepository;
 
+    //Skapa UserActivity
     public void addActivityForUser(UserActivityDTO userActivityDTO) {
         User user = userRepository.findById(userActivityDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("Användare hittades ej"));
@@ -40,6 +41,8 @@ public class UserActivityService {
         userActivityRepository.save(userActivity);
     }
 
+
+    //Hämta UserActivity via ID
     public List<UserActivityDTO> getUserActivities(Integer userId) {
         List<UserActivity> userActivities = userActivityRepository.findByUserId(userId);
 

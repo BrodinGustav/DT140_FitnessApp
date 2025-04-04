@@ -44,7 +44,6 @@ public class Activity {
     private Category category;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
-    private List<UserActivity> userActivities;
 
 
     // Getters and setters
@@ -81,21 +80,12 @@ public class Activity {
         this.category = category;
     }
 
-    public List<UserActivity> getUserActivities() {
-        return userActivities;
-    }
-
-    public void setUserActivities(List<UserActivity> userActivities) {
-        this.userActivities = userActivities;
-    }
-
-
-
+  
     
     @Override
     public String toString() {
         return "Activity [id=" + id + ", name=" + name + ", points=" + points + ", category=" + category
-                + ", userActivities=" + userActivities + "]";
+                + "]";
     }
 
     @Override
@@ -106,7 +96,6 @@ public class Activity {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + points;
         result = prime * result + ((category == null) ? 0 : category.hashCode());
-        result = prime * result + ((userActivities == null) ? 0 : userActivities.hashCode());
         return result;
     }
 
@@ -135,11 +124,6 @@ public class Activity {
             if (other.category != null)
                 return false;
         } else if (!category.equals(other.category))
-            return false;
-        if (userActivities == null) {
-            if (other.userActivities != null)
-                return false;
-        } else if (!userActivities.equals(other.userActivities))
             return false;
         return true;
     }

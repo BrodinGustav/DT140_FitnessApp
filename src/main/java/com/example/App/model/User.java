@@ -68,11 +68,7 @@ public class User {
         this.name = name;
     }
 
-    public List<UserActivity> getUserActivities() {
-        return userActivities;
-    }
-
-    public void setUserActivities(List<UserActivity> userActivities) {
+    public void getActivity(List<UserActivity> userActivities) {
         this.userActivities = userActivities;
     }
 
@@ -113,7 +109,7 @@ public class User {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + ((userActivities == null) ? 0 : userActivities.hashCode());
+     //   result = prime * result + ((userActivities == null) ? 0 : userActivities.hashCode());
         return result;
     }
 
@@ -141,11 +137,11 @@ public class User {
                 return false;
         } else if (!email.equals(other.email))
             return false;
-        if (userActivities == null) {
+    /*     if (userActivities == null) {
             if (other.userActivities != null)
                 return false;
         } else if (!userActivities.equals(other.userActivities))
-            return false;
+            return false;*/
         return true;
     }
 
