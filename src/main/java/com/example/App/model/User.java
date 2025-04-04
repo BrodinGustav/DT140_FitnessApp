@@ -37,9 +37,10 @@ public class User {
         //Standard konstruktor enligt JPA
     }
 
-    public User(String name, String email) {
+    public User(String name, String email, String role) {
         this.name = name;
         this.email = email;
+        this.role = role;
     }
 
     
@@ -102,7 +103,7 @@ public class User {
     
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", email=" + email + ", userActivities=" + userActivities + "]";
+        return "User [id=" + id + ", name=" + name + ", email=" + email + ", role=" + role +", userActivities=" + userActivities + "]";
     }
 
     @Override

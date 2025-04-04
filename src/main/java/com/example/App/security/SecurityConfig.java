@@ -24,11 +24,11 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-@Configuration // Marks this as a configuration file
-@EnableWebSecurity // Enables security for this application
+@Configuration 
+@EnableWebSecurity //Sätter igång security för applikationen
 public class SecurityConfig {
 
-    // Injecting Dependencies
+    //Injecting Dependencies
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -37,7 +37,7 @@ public class SecurityConfig {
     private MyUserDetailsService uds;
 
    
-    // Method to configure your app security
+    //Metod som konfiguerar security kring app
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -47,10 +47,14 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()  // Tillåter ej autentiserade anrop
+                        .requestMatchers("/api/users/**").permitAll()  // Tillåter ej autentiserade anrop
+                        .requestMatchers("/api/activities/**").permitAll()  // Tillåter ej autentiserade anrop
+                        .requestMatchers("/api/categories/**").permitAll()  // Tillåter ej autentiserade anrop
+                        .requestMatchers("/api/useractivities/**").permitAll()  // Tillåter ej autentiserade anrop
                         .requestMatchers("/api/user/**").hasRole("USER") // Kräver "USER"-roll
                         .anyRequest().authenticated() // Alla andra requests kräver autentisering
                 )
-
+            
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Stateless sessionhantering
                 )
@@ -66,14 +70,14 @@ public class SecurityConfig {
                 .build();
     }
 
-    // Creating a bean for the password encoder
+    // Skapar bean för password encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Exposing the bean of the authentication manager which will be used to run the
-    // authentication process
+    // Exponerar bean av authentication manager vilken kör
+    // authentication processen
    @Bean
 public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
     return authenticationConfiguration.getAuthenticationManager();

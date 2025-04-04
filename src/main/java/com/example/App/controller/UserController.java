@@ -24,7 +24,7 @@ public class UserController {
     @Autowired private UserRepository userRepository;
 
 
-    @PostMapping("/create")
+    @PostMapping("/create") //Behövs denna nu när Register finns? 
  
      @Operation(summary = "Skapar en ny användare", description = "Lägger till en ny användare i databasen.")
     @ApiResponse(responseCode = "201", description = "Användare skapad",
@@ -59,7 +59,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/user/{id}")  
 
     @Operation(summary = "Uppdaterar användare", description = "Uppdaterar användare i databasen.")
     @ApiResponse(responseCode = "201", description = "Användare uppdaterad",
@@ -70,7 +70,7 @@ public class UserController {
         return userService.updateUser(id, userDetails);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/user/{id}") 
 
     @Operation(summary = "Raderar användare", description = "Raderar användare från databasen.")
     @ApiResponse(responseCode = "201", description = "Användare raderad",
@@ -81,7 +81,7 @@ public class UserController {
     userService.deleteUser(id);
 }
 
-    //Säkra rutter
+    //Säker rutt för USER_ROLE
     @GetMapping("/info")
     public User getUserDetails(){
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

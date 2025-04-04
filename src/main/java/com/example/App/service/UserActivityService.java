@@ -15,7 +15,7 @@ import com.example.App.repository.UserActivityRepository;
 import com.example.App.repository.UserRepository;
 
 @Service
-public class FitnessService {
+public class UserActivityService {
 
     @Autowired
     private UserRepository userRepository;
