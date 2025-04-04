@@ -1,5 +1,7 @@
 package com.example.App.dto;
 
+import java.util.List;
+
 public class UserActivityDTO {
 
     //Properties
@@ -12,8 +14,19 @@ public class UserActivityDTO {
     private String userName;  
     private String activityName;  
 
+    private List<UserActivityDTO> userActivities;
+
+
     // Getters and setters
     
+    public List<UserActivityDTO> getActivities() {
+        return userActivities;
+    }
+
+    public void setActivities(List<UserActivityDTO> userActivities) {
+        this.userActivities = userActivities;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -1,49 +1,67 @@
 package com.example.App.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.App.dto.UserActivityDTO;
-import com.example.App.model.Activity;
-import com.example.App.model.User;
 import com.example.App.model.UserActivity;
-import com.example.App.repository.ActivityRepository;
 import com.example.App.repository.UserActivityRepository;
-import com.example.App.repository.UserRepository;
 
 @Service
 public class UserActivityService {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ActivityRepository activityRepository;
-
-    @Autowired
     private UserActivityRepository userActivityRepository;
 
-    //Skapa UserActivity
-    public void addActivityForUser(UserActivityDTO userActivityDTO) {
-        User user = userRepository.findById(userActivityDTO.getUserId())
-                .orElseThrow(() -> new RuntimeException("Användare hittades ej"));
-        Activity activity = activityRepository.findById(userActivityDTO.getActivityId())
-                .orElseThrow(() -> new RuntimeException("Aktivitet hittades ej"));
 
-        UserActivity userActivity = new UserActivity();
-        userActivity.setUser(user);
-        userActivity.setActivity(activity);
-        userActivity.setPoints(userActivityDTO.getPoints());
 
-        userActivityRepository.save(userActivity);
+
+    public UserActivity saveUserActivity(UserActivity userActivity) {
+        return userActivityRepository.save(userActivity);   //Fungerar även som update och create
+    }
+
+    public List<UserActivity> getAllUserActivities() {
+        return userActivityRepository.findAll();
+    }
+    
+    public UserActivity getUserActivityById(Integer id) {
+        return userActivityRepository.findById(id)
+        .orElseThrow(() -> new RuntimeException("UserActivity med id: " + id + "hittades ej."));
+    }
+
+    public void deleteUserActivity(Integer id) {
+        userActivityRepository.deleteById(id);
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+/* 
+    
     //Hämta UserActivity via ID
-    public List<UserActivityDTO> getUserActivities(Integer userId) {
+   public List<UserActivityDTO> getUserActivities(Integer userId) {
         List<UserActivity> userActivities = userActivityRepository.findByUserId(userId);
 
         // debugg
@@ -71,4 +89,55 @@ public class UserActivityService {
             return dto;
         }).collect(Collectors.toList());
     }
+
+
+    
+
+     //Skapa UserActivity
+     public void addActivityForUser(UserActivityDTO userActivityDTO) {
+        User user = userRepository.findById(userActivityDTO.getUserId())
+                .orElseThrow(() -> new RuntimeException("Användare hittades ej"));
+        Activity activity = activityRepository.findById(userActivityDTO.getActivityId())
+                .orElseThrow(() -> new RuntimeException("Aktivitet hittades ej"));
+
+        UserActivity userActivity = new UserActivity();
+        userActivity.setUser(user);
+        userActivity.setActivity(activity);
+        userActivity.setPoints(userActivityDTO.getPoints());
+
+        userActivityRepository.save(userActivity);
+    }
+
+
+//CRUD utanför DTO som test ifall 401 försvinner
+
+//GET
+ /*   public List<UserActivity> getAllUserActivities() {
+        return userActivityRepository.findAll();
+    }
+
+//GET {id}
+public UserActivity getUserActivityById(Integer id) {
+    return userActivityRepository.findById(id)
+    .orElseThrow(() -> new RuntimeException("UserActivity med id: " + id + "hittades ej."));
+}
+
+//DELETE
+public void deleteUserActivity(Integer id) {
+    userActivityRepository.deleteById(id);
+}
+
+//CREATE (Via DTO)
+public UserActivity save(UserActivityDTO userActivityDTO) {
+        
+    //Skapar en UserActivity från UserActivityRequest
+    UserActivity userActivity = new UserActivity();
+    
+    userActivity.setId(userActivityDTO.getId());
+
+    return userActivityRepository.save(userActivity); //Sparar entiteten i databasen
+}
+*/
+
+
 }

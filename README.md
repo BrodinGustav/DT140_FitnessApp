@@ -25,6 +25,13 @@ POST    /api/users/create               Registrerar ny användare
 PUT     /api/users/{id}                 Uppdaterar specifik användare
 DELETE  /api/users/{id}                 Raderar specifik användare
 
+//UserActity (denna fungerar inte. 401 unauthorized, och en del error)
+GET     /api/users                       Hämtar alla användare
+GET     /api/users/{id}                 Hämtar specifik användare
+POST    /api/users/create               Registrerar ny användare
+PUT     /api/users/{id}                 Uppdaterar specifik användare
+DELETE  /api/users/{id}                 Raderar specifik användare
+
 ------------------------------------------------------
 
 Användarhantering (Kräver autentisering)
