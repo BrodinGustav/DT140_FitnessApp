@@ -78,7 +78,7 @@ public class UserActivity {
     
     @Override
     public String toString() {
-        return "UserActivity [id=" + id + ", user=" + user + ", activity=" + activity + ", points=" + points + "]";
+        return "UserActivity [id=" + id + ", user=null" + user + ", activity=" + activity + ", points=" + points + "]";
     }
 
     

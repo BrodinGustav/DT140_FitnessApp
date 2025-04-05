@@ -1,7 +1,5 @@
 package com.example.App.model;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
@@ -47,7 +45,7 @@ public class User {
     //Relationer 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserActivity> userActivities;
+   
 
     
     // Getters and setters
@@ -66,10 +64,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void getActivity(List<UserActivity> userActivities) {
-        this.userActivities = userActivities;
     }
 
     public String getEmail() {
@@ -99,7 +93,7 @@ public class User {
     
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", email=" + email + ", role=" + role +", userActivities=" + userActivities + "]";
+        return "User [id=" + id + ", name=" + name + ", email=" + email + ", role=" + role + "]";
     }
 
     @Override
