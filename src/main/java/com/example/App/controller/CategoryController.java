@@ -1,6 +1,7 @@
 package com.example.App.controller;
 
 import com.example.App.model.Category;
+import com.example.App.response.SuccessResponse;
 import com.example.App.service.CategoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,31 +24,32 @@ public class CategoryController {
 
     @PostMapping("/create")
 
-        @Operation(summary = "Skapar en ny kategori", description = "Lägger till en ny kategori i databasen.")
-    @ApiResponse(responseCode = "201", description = "Kategori skapades",
-    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)))
+    @Operation(summary = "Skapar en ny kategori", description = "Lägger till en ny kategori i databasen.")
+    @ApiResponse(responseCode = "201", description = "Kategori skapades", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)))
     @ApiResponse(responseCode = "500", description = "Internt serverfel")
 
-    public Category createCategory(@RequestBody Category category) {
-        return categoryService.createCategory(category);
+    public ResponseEntity<SuccessResponse<Category>> createCategory(@RequestBody Category category) {
+        Category createdCategory = categoryService.createCategory(category);
+        SuccessResponse<Category> response = new SuccessResponse<>("Kategori har skapats", createdCategory);
+        return ResponseEntity.ok(response); // Skickar HTTP 200 OK + objektet
     }
 
     @GetMapping("/{id}")
 
     @Operation(summary = "Hämtar specifik kategori", description = "Hämtar specifik kategori baserat på id.")
-    @ApiResponse(responseCode = "201", description = "Kategori hämtad",
-    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)))
+    @ApiResponse(responseCode = "201", description = "Kategori hämtad", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)))
     @ApiResponse(responseCode = "404", description = "Kategori hittades inte")
 
-    public Category getCategory(@PathVariable Integer id) {
-        return categoryService.getCategoryById(id);
+    public ResponseEntity<SuccessResponse<Category>> getCategory(@PathVariable Integer id) {
+        Category category = categoryService.getCategoryById(id);
+        SuccessResponse<Category> response = new SuccessResponse<>("Kategori med ID " + id + " har hämtats", category);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
 
     @Operation(summary = "Hämtar kategori", description = "Hämtar kategori från databasen.")
-    @ApiResponse(responseCode = "201", description = "Kategori hämtade",
-    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)))
+    @ApiResponse(responseCode = "201", description = "Kategori hämtade", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)))
     @ApiResponse(responseCode = "404", description = "Kategori hittades inte")
 
     public List<Category> getAllCategories() {
@@ -56,23 +59,25 @@ public class CategoryController {
     @PutMapping("/{id}")
 
     @Operation(summary = "Uppdaterar aktivitet", description = "Uppdaterar aktivitet i databasen.")
-    @ApiResponse(responseCode = "201", description = "Aktivitet uppdaterad",
-    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)))   
+    @ApiResponse(responseCode = "201", description = "Aktivitet uppdaterad", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)))
     @ApiResponse(responseCode = "404", description = "Aktivitet hittades inte")
 
-    public Category updateCategory(@PathVariable Integer id, @RequestBody Category categoryDetails) {
-        return categoryService.updateCategory(id, categoryDetails);
+    public ResponseEntity<SuccessResponse<Category>> updateCategory(@PathVariable Integer id,
+            @RequestBody Category categoryDetails) {
+        categoryService.updateCategory(id, categoryDetails);
+        SuccessResponse<Category> response = new SuccessResponse<>("Kategori med ID " + id + " har uppdaterats", categoryDetails);
+        return ResponseEntity.ok(response); // Skickar HTTP 200 OK + objektet
     }
 
     @DeleteMapping("/{id}")
-    
+
     @Operation(summary = "Raderar kategori", description = "Raderar kategori från databasen.")
-    @ApiResponse(responseCode = "201", description = "Kategori raderad",
-    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)))
+    @ApiResponse(responseCode = "201", description = "Kategori raderad", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Category.class)))
     @ApiResponse(responseCode = "404", description = "Kategori hittades inte")
 
-
-    public void deleteCategory(@PathVariable Integer id) {
+    public ResponseEntity<SuccessResponse<Category>> deleteCategory(@PathVariable Integer id) {
         categoryService.deleteCategory(id);
+        SuccessResponse<Category> response = new SuccessResponse<>("Kategori med ID " + id + " har raderats.");
+        return ResponseEntity.ok(response); // Skickar HTTP 200 OK + objektet
     }
 }

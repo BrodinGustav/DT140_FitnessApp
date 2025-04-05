@@ -1,8 +1,12 @@
 package com.example.App.service;
 
+import com.example.App.execption.ResourceNotFoundException;
 import com.example.App.model.Category;
 import com.example.App.repository.CategoryRepository;
+import com.example.App.response.SuccessResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +22,8 @@ public class CategoryService {
     }
 
     public Category getCategoryById(Integer id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Kategori hittades inte"));
+        return categoryRepository.findById(id)
+         .orElseThrow(() -> new ResourceNotFoundException("Kategori med id " + id + " hittades inte."));
     }
 
     public List<Category> getAllCategories() {
@@ -26,7 +31,8 @@ public class CategoryService {
     }
 
     public Category updateCategory(Integer id, Category categoryDetails) {
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Kategori hittades inte"));
+        Category category = categoryRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Kategori med id " + id + " hittades inte."));
     
         category.setName(categoryDetails.getName());
         return categoryRepository.save(category);

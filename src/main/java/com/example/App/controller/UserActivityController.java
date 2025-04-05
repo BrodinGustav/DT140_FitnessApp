@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.App.dto.UserActivityDTO;
+import com.example.App.model.User;
 import com.example.App.model.UserActivity;
+import com.example.App.response.SuccessResponse;
 import com.example.App.service.UserActivityService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +24,7 @@ public class UserActivityController {
     @Autowired
     private UserActivityService userActivityService;
 
-    /*
+    
     @PostMapping("/create")
 
     @Operation(summary = "Skapar en ny användaraktivitet", description = "Lägger till en ny användaraktivitet i databasen.")
@@ -30,10 +33,11 @@ public class UserActivityController {
     @ApiResponse(responseCode = "500", description = "Internt serverfel")
 
      
-    public void addActivityForUser(@RequestBody UserActivityDTO userActivityDTO) {
-        userActivityService.addActivityForUser(userActivityDTO);
+    public ResponseEntity<SuccessResponse<UserActivity>> addActivityForUser(@RequestBody UserActivity userActivity) {
+        userActivityService.saveUserActivity(userActivity);
+        SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet har skapats", userActivity);
+        return ResponseEntity.ok(response);
     }
-*/
 
 
     //GET
@@ -69,8 +73,10 @@ public ResponseEntity<List<UserActivity>> getAllUserActivities() {
 content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserActivity.class)))
 @ApiResponse(responseCode = "404", description = "Användaraktivitet hittades inte")
 
-public ResponseEntity<UserActivity> getUserActivityById(@PathVariable Integer id) {
-    return ResponseEntity.ok(userActivityService.getUserActivityById(id));
+public ResponseEntity<SuccessResponse<UserActivity>> getUserActivityById(@PathVariable Integer id) {
+    UserActivity userActivity = userActivityService.getUserActivityById(id);
+    SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet med ID " + id + " har hämtats", userActivity);
+    return ResponseEntity.ok(response);
 
 }
 
@@ -84,9 +90,10 @@ public ResponseEntity<UserActivity> getUserActivityById(@PathVariable Integer id
 content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserActivity.class)))   
 @ApiResponse(responseCode = "404", description = "Användaraktivitet hittades inte")
 
-public ResponseEntity<UserActivity> updateUserActivity(@PathVariable int id, @RequestBody UserActivity userActivity) {
+public ResponseEntity<SuccessResponse<UserActivity>> updateUserActivity(@PathVariable int id, @RequestBody UserActivity userActivity) {
     userActivity.setId(id);
-    return ResponseEntity.ok(userActivityService.saveUserActivity(userActivity));
+    SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet med ID " + id + " har uppdaterats", userActivity);
+    return ResponseEntity.ok(response);
 }
 
 
@@ -100,14 +107,14 @@ content = @Content(mediaType = "application/json", schema = @Schema(implementati
 @ApiResponse(responseCode = "404", description = "Användaraktivitet hittades inte")
 
 
-public ResponseEntity<Void> deleteUserActivity(@PathVariable int id, @RequestBody UserActivity userActivity) {
+public ResponseEntity<SuccessResponse<UserActivity>> deleteUserActivity(@PathVariable int id, @RequestBody UserActivity userActivity) {
     userActivity.setId(id);
     userActivityService.deleteUserActivity(id);
-    return ResponseEntity.noContent().build();
+    SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet med ID " + id + " har raderats.");
+    return ResponseEntity.ok(response);
 }
 
 
-     
     
 
 

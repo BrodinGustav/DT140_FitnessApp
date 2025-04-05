@@ -1,5 +1,6 @@
 package com.example.App.service;
 
+import com.example.App.execption.ResourceNotFoundException;
 import com.example.App.model.Activity;
 import com.example.App.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ public class ActivityService {
     }
 
     public Activity getActivityById(Integer id) {
-        return activityRepository.findById(id).orElseThrow(() -> new RuntimeException("Activity not found"));
+        return activityRepository.findById(id)
+         .orElseThrow(() -> new ResourceNotFoundException("Aktivitet med id " + id + " hittades inte."));
     }
 
     public List<Activity> getAllActivities() {
@@ -26,7 +28,8 @@ public class ActivityService {
     }
 
     public Activity updateActivity(Integer id, Activity activityDetails) {
-        Activity activity = activityRepository.findById(id).orElseThrow(() -> new RuntimeException("Aktivitet hittade ej"));
+        Activity activity = activityRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Aktivitet med id " + id + " hittades inte."));
 
         activity.setName(activityDetails.getName());
         activity.setPoints(activityDetails.getPoints());

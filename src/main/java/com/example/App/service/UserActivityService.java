@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.App.execption.ResourceNotFoundException;
 import com.example.App.model.UserActivity;
 import com.example.App.repository.UserActivityRepository;
 
@@ -27,7 +28,16 @@ public class UserActivityService {
     
     public UserActivity getUserActivityById(Integer id) {
         return userActivityRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("UserActivity med id: " + id + "hittades ej."));
+        .orElseThrow(() -> new ResourceNotFoundException("UserActivity med id " + id + " hittades inte."));
+    }
+
+     public UserActivity updateUserActivity(Integer id, UserActivity userActivityDetails) {
+        UserActivity userActivity = userActivityRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("UserActivity med id " + id + " hittades inte."));
+        
+        userActivity.setPoints(userActivityDetails.getPoints());
+        
+        return userActivityRepository.save(userActivity);
     }
 
     public void deleteUserActivity(Integer id) {

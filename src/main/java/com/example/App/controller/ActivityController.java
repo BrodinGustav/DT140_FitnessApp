@@ -1,6 +1,8 @@
 package com.example.App.controller;
 
 import com.example.App.model.Activity;
+import com.example.App.model.User;
+import com.example.App.response.SuccessResponse;
 import com.example.App.service.ActivityService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +30,10 @@ public class ActivityController {
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Activity.class)))
     @ApiResponse(responseCode = "500", description = "Internt serverfel")
 
-    public Activity createActivity(@RequestBody Activity activity) {
-        return activityService.createActivity(activity);
+    public ResponseEntity<SuccessResponse<Activity>> createActivity(@RequestBody Activity activity) {
+        Activity createdActivity = activityService.createActivity(activity);
+        SuccessResponse<Activity> response = new SuccessResponse<>("Aktivitet har skapats", createdActivity);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
@@ -38,8 +43,10 @@ public class ActivityController {
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Activity.class)))
     @ApiResponse(responseCode = "404", description = "Aktivitet hittades inte")
 
-    public Activity getActivity(@PathVariable Integer id) {
-        return activityService.getActivityById(id);
+    public ResponseEntity<SuccessResponse<Activity>> getActivity(@PathVariable Integer id) {
+        Activity activity = activityService.getActivityById(id);
+        SuccessResponse<Activity> response = new SuccessResponse<>("Aktivitet med ID" + id + " har hämtats", activity);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
@@ -60,8 +67,10 @@ public class ActivityController {
         content = @Content(mediaType = "application/json", schema = @Schema(implementation = Activity.class)))   
         @ApiResponse(responseCode = "404", description = "Aktivitet hittades inte")
 
-        public Activity updateActivity(@PathVariable Integer id, @RequestBody Activity activityDetails) {
-        return activityService.updateActivity(id, activityDetails);
+        public ResponseEntity<SuccessResponse<Activity>> updateActivity(@PathVariable Integer id, @RequestBody Activity activityDetails) {
+        activityService.updateActivity(id, activityDetails);
+        SuccessResponse<Activity> response = new SuccessResponse<>("Aktivitet med ID " + id + " har uppdaterats", activityDetails);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
@@ -71,8 +80,9 @@ public class ActivityController {
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Activity.class)))
     @ApiResponse(responseCode = "404", description = "Aktivitet hittades inte")
 
-    public void deleteActivity(@PathVariable Integer id) {
+    public ResponseEntity<SuccessResponse<Activity>> deleteActivity(@PathVariable Integer id) {
     activityService.deleteActivity(id);
+    SuccessResponse<Activity> response = new SuccessResponse<>("Aktivitet med ID " + id + " har raderats.");
+    return ResponseEntity.ok(response);
 }
 }
-

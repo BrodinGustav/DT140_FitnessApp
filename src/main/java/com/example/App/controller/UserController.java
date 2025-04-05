@@ -2,6 +2,7 @@ package com.example.App.controller;
 
 import com.example.App.model.User;
 import com.example.App.repository.UserRepository;
+import com.example.App.response.SuccessResponse;
 import com.example.App.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +33,10 @@ public class UserController {
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
     @ApiResponse(responseCode = "500", description = "Internt serverfel")
 
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public ResponseEntity<SuccessResponse<User>> createUser(@RequestBody User user) {
+         userService.createUser(user);
+         SuccessResponse<User> response = new SuccessResponse<>("Användare har skapats", user);
+         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
@@ -42,8 +46,10 @@ public class UserController {
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
 
-    public User getUser(@PathVariable Integer id) {
-        return userService.getUserById(id);
+    public ResponseEntity<SuccessResponse<User>> getUser(@PathVariable Integer id) {
+        User user = userService.getUserById(id);
+        SuccessResponse<User> response = new SuccessResponse<>("Användaren med ID " + id + " har hämtats", user);
+        return ResponseEntity.ok(response);
     }
 
     
@@ -55,30 +61,35 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
 
 
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+   public ResponseEntity<List<User>> getAllUsers() {
+    List<User> users = userService.getAllUsers();
+    return ResponseEntity.ok(users);
     }
 
-    @PutMapping("/api/user/{id}")  
+    @PutMapping("/{id}")  
 
     @Operation(summary = "Uppdaterar användare", description = "Uppdaterar användare i databasen.")
     @ApiResponse(responseCode = "201", description = "Användare uppdaterad",
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))   
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
 
-    public User updateUser(@PathVariable Integer id, @RequestBody User userDetails) {
-        return userService.updateUser(id, userDetails);
+    public ResponseEntity<SuccessResponse<User>> updateUser(@PathVariable Integer id, @RequestBody User userDetails) {
+        userService.updateUser(id, userDetails);
+        SuccessResponse<User> response = new SuccessResponse<>("Användaren med ID " + id + " har uppdaterats", userDetails);
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/api/user/{id}") 
+    @DeleteMapping("/{id}") 
 
     @Operation(summary = "Raderar användare", description = "Raderar användare från databasen.")
     @ApiResponse(responseCode = "201", description = "Användare raderad",
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
     
-    public void deleteUser(@PathVariable Integer id) {
-    userService.deleteUser(id);
+    public ResponseEntity<SuccessResponse<User>> deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+        SuccessResponse<User> response = new SuccessResponse<>("Användaren med ID " + id + " har raderats.");
+        return ResponseEntity.ok(response);
 }
 
     //Säker rutt för USER_ROLE
