@@ -3,10 +3,8 @@ package com.example.App.service;
 import com.example.App.execption.ResourceNotFoundException;
 import com.example.App.model.Category;
 import com.example.App.repository.CategoryRepository;
-import com.example.App.response.SuccessResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

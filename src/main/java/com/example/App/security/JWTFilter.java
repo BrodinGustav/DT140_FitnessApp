@@ -28,6 +28,9 @@ public class JWTFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+
+                                        //Debugg
+                                        System.out.println("JWT Filter fungerar"); 
         
         //Extraherar "Authorization" header
         String authHeader = request.getHeader("Authorization");
@@ -37,16 +40,25 @@ public class JWTFilter extends OncePerRequestFilter {
             
             //Extraherar JWT
             String jwt = authHeader.substring(7);
+
+            //Debugg
+            System.out.println("JWT Token Extracted: " + jwt);
+
             if(jwt == null || jwt.isBlank()){
                 
                 //Invalid JWT
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token i Bearer Header");
+
             }else {
+
                 try{
                     //Verifierar token och extraherar email
                     String email = jwtUtil.validateTokenAndRetrieveSubject(jwt);
 
-                    //Fetch User Details
+                    //Debugg
+                    System.out.println("Email extracted from JWT: " + email);
+
+                    //Fetchar User Details
                     UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
                     //Skapar Authentication Token
@@ -57,6 +69,7 @@ public class JWTFilter extends OncePerRequestFilter {
                     if(SecurityContextHolder.getContext().getAuthentication() == null){
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
+
                 }catch(JWTVerificationException exc){
                     
                     //Misslyckades att verifiera JWT

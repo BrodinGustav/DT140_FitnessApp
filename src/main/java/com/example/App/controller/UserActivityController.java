@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.App.dto.UserActivityDTO;
-import com.example.App.model.User;
 import com.example.App.model.UserActivity;
 import com.example.App.response.SuccessResponse;
 import com.example.App.service.UserActivityService;
