@@ -1,6 +1,5 @@
 package com.example.App.controller;
 
-import com.example.App.model.Activity;
 import com.example.App.model.User;
 import com.example.App.repository.UserRepository;
 import com.example.App.response.SuccessResponse;

@@ -37,42 +37,7 @@ public class UserActivity {
 
     // Getters and setters
     
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-         public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-
-    public Activity getActivity() {
-        return activity;
-    }
-
-    public Activity setActivity(Activity activity) {
-        return this.activity = activity;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
+    
 
 
     
@@ -82,6 +47,56 @@ public class UserActivity {
     }
 
     
+    public Integer getId() {
+        return id;
+    }
+
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+
+    public int getPoints() {
+        return points;
+    }
+
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+
+    public User getUser() {
+        return user;
+    }
+
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+
     @Override
     public int hashCode() {
         final int prime = 31;

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.App.dto.CreateUserActivityDTO;
 import com.example.App.model.UserActivity;
 import com.example.App.repository.UserActivityRepository;
 import com.example.App.response.SuccessResponse;
@@ -22,6 +23,9 @@ public class UserActivityController {
 
     @Autowired
     private UserActivityRepository userActivityRepository;
+
+    @Autowired
+    private UserActivityService userActivityService;
 
     
     @PostMapping("/create")
@@ -78,11 +82,9 @@ public ResponseEntity<SuccessResponse<UserActivity>> getUserActivityById(@PathVa
 content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserActivity.class)))   
 @ApiResponse(responseCode = "404", description = "Användaraktivitet hittades inte")
 
-public ResponseEntity<SuccessResponse<UserActivity>> updateUserActivity(@PathVariable int id, @RequestBody UserActivity userActivity) {
-    userActivity.setId(id);
-    userActivityRepository.save(userActivity);
-    SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet med ID " + id + " har uppdaterats", userActivity);
-    return ResponseEntity.ok(response);
+public ResponseEntity<SuccessResponse<UserActivity>> updateUserActivity(@PathVariable int id, @RequestBody CreateUserActivityDTO userActivity) {
+    userActivityService.createUserActivity(userActivity);
+    return ResponseEntity.noContent().build();
 }
 
 
@@ -105,4 +107,5 @@ public ResponseEntity<SuccessResponse<UserActivity>> deleteUserActivity(@PathVar
 
 
     
+
 }

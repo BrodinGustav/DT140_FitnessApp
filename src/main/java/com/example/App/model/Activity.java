@@ -1,16 +1,20 @@
 package com.example.App.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Activity {
+
+    
+    public enum ActivityName {
+        STYRKA,
+        BALETT,
+        POLEDANCING,
+        SIMMNING
+    }
 
     //Properties
 
@@ -18,7 +22,7 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    private ActivityName name;
     private int points;
 
 
@@ -28,23 +32,14 @@ public class Activity {
         //Standard konstruktor enligt JPA
     }
 
-    public Activity(String name, Integer points, Category category) {
+    public Activity(ActivityName name, Integer points) {
         this.name = name;
         this.points = points;
         }
 
 
 
-    //Relationer
-    
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
-
-
-    // Getters and setters
+      // Getters and setters
     
     public Integer getId() {
         return id;
@@ -54,11 +49,11 @@ public class Activity {
         this.id = id;
     }
 
-    public String getName() {
+    public ActivityName getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(ActivityName name) {
         this.name = name;
     }
 
@@ -70,20 +65,12 @@ public class Activity {
         this.points = points;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
+    
   
     
     @Override
     public String toString() {
-        return "Activity [id=" + id + ", name=" + name + ", points=" + points + ", category=" + category
-                + "]";
+        return "Activity [id=" + id + ", name=" + name + ", points=" + points + ", ]";
     }
 
     @Override
@@ -93,7 +80,6 @@ public class Activity {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + points;
-        result = prime * result + ((category == null) ? 0 : category.hashCode());
         return result;
     }
 
@@ -117,11 +103,6 @@ public class Activity {
         } else if (!name.equals(other.name))
             return false;
         if (points != other.points)
-            return false;
-        if (category == null) {
-            if (other.category != null)
-                return false;
-        } else if (!category.equals(other.category))
             return false;
         return true;
     }

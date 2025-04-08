@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.App.service.MyUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ import java.io.IOException;
 
 @Component //Komponent. Spring Boot skapar och hanterar JWTFilter Bean
 // JWTFilter bean kan nu injectas i andra delar av koden
+@Profile("!nosecurity")
 public class JWTFilter extends OncePerRequestFilter {
 
     // Injecting Dependencies

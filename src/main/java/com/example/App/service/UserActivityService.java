@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.App.dto.CreateUserActivityDTO;
 import com.example.App.model.UserActivity;
 
 @Service
 public interface UserActivityService {
 
-    UserActivity createUserActivity(UserActivity userActivity);
+    UserActivity createUserActivity(CreateUserActivityDTO userActivity);
     List<UserActivity> getAllUserActivities();
     UserActivity getUserActivityById(Integer id);
     UserActivity updateUserActivity(Integer id, UserActivity userActivityDetails);

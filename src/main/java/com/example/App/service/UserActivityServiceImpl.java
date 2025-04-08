@@ -3,19 +3,41 @@ package com.example.App.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.example.App.dto.CreateUserActivityDTO;
 import com.example.App.execption.ResourceNotFoundException;
 import com.example.App.model.UserActivity;
+import com.example.App.repository.ActivityRepository;
 import com.example.App.repository.UserActivityRepository;
+import com.example.App.repository.UserRepository;
 
 
-public class UserActivityImpl implements UserActivityService {
+@Service
+public class UserActivityServiceImpl implements UserActivityService {
+
+    @Autowired
+    private ActivityRepository categoryRepository;
+    @Autowired
+    private UserRepository userRepository;
     
  @Autowired
     private UserActivityRepository userActivityRepository;
+    
 
     @Override
-    public UserActivity createUserActivity(UserActivity userActivity) {
+    public UserActivity createUserActivity(CreateUserActivityDTO putUserActivity) {
+
+        var category = categoryRepository.getActivityByName(putUserActivity.getActivityName());
+        var user = userRepository.findById(putUserActivity.getUserId())
+        .orElseThrow();
+
+        var userActivity = new UserActivity();
+        userActivity.setUser(user);
+        userActivity.setActivity(category);
+        userActivity.setPoints(100);
+        userActivity.setActivity(category);
+
         return userActivityRepository.save(userActivity);   //Fungerar även som update och create
     }
 

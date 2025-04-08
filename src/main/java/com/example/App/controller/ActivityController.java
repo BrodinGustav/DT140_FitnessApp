@@ -1,10 +1,8 @@
 package com.example.App.controller;
 
 import com.example.App.model.Activity;
-import com.example.App.model.User;
 import com.example.App.repository.ActivityRepository;
 import com.example.App.response.SuccessResponse;
-import com.example.App.service.ActivityService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
