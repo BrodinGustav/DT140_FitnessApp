@@ -1,6 +1,8 @@
 package com.example.App.controller;
 
 import com.example.App.model.Activity;
+import com.example.App.model.User;
+import com.example.App.repository.ActivityRepository;
 import com.example.App.response.SuccessResponse;
 import com.example.App.service.ActivityService;
 
@@ -20,7 +22,7 @@ import java.util.List;
 public class ActivityController {
     
     @Autowired
-    private ActivityService activityService;
+    private ActivityRepository activityRepository;
 
     @PostMapping("/create")
 
@@ -30,7 +32,7 @@ public class ActivityController {
     @ApiResponse(responseCode = "500", description = "Internt serverfel")
 
     public ResponseEntity<SuccessResponse<Activity>> createActivity(@RequestBody Activity activity) {
-        Activity createdActivity = activityService.createActivity(activity);
+        Activity createdActivity = activityRepository.save(activity);
         SuccessResponse<Activity> response = new SuccessResponse<>("Aktivitet har skapats", createdActivity);
         return ResponseEntity.ok(response);
     }
@@ -43,7 +45,7 @@ public class ActivityController {
     @ApiResponse(responseCode = "404", description = "Aktivitet hittades inte")
 
     public ResponseEntity<SuccessResponse<Activity>> getActivity(@PathVariable Integer id) {
-        Activity activity = activityService.getActivityById(id);
+        Activity activity = activityRepository.getActivityById(id);
         SuccessResponse<Activity> response = new SuccessResponse<>("Aktivitet med ID" + id + " har hämtats", activity);
         return ResponseEntity.ok(response);
     }
@@ -56,7 +58,7 @@ public class ActivityController {
     @ApiResponse(responseCode = "404", description = "Aktivitet hittades inte")
 
     public List<Activity> getAllActivities() {
-        return activityService.getAllActivities();
+         return activityRepository.findAll(); 
     }
 
         @PutMapping("/{id}")
@@ -67,7 +69,8 @@ public class ActivityController {
         @ApiResponse(responseCode = "404", description = "Aktivitet hittades inte")
 
         public ResponseEntity<SuccessResponse<Activity>> updateActivity(@PathVariable Integer id, @RequestBody Activity activityDetails) {
-        activityService.updateActivity(id, activityDetails);
+        activityDetails.setId(id);
+        activityRepository.save(activityDetails);
         SuccessResponse<Activity> response = new SuccessResponse<>("Aktivitet med ID " + id + " har uppdaterats", activityDetails);
         return ResponseEntity.ok(response);
     }
@@ -79,8 +82,9 @@ public class ActivityController {
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = Activity.class)))
     @ApiResponse(responseCode = "404", description = "Aktivitet hittades inte")
 
-    public ResponseEntity<SuccessResponse<Activity>> deleteActivity(@PathVariable Integer id) {
-    activityService.deleteActivity(id);
+    public ResponseEntity<SuccessResponse<Activity>> deleteActivity(@PathVariable int id, @RequestBody Activity activity) {
+    activity.setId(id);
+        activityRepository.delete(activity);
     SuccessResponse<Activity> response = new SuccessResponse<>("Aktivitet med ID " + id + " har raderats.");
     return ResponseEntity.ok(response);
 }

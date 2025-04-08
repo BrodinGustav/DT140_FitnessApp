@@ -1,9 +1,9 @@
 package com.example.App.controller;
 
+import com.example.App.model.Activity;
 import com.example.App.model.User;
 import com.example.App.repository.UserRepository;
 import com.example.App.response.SuccessResponse;
-import com.example.App.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,13 +16,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired private UserService userService;
     @Autowired private UserRepository userRepository;
 
 
@@ -34,8 +34,8 @@ public class UserController {
     @ApiResponse(responseCode = "500", description = "Internt serverfel")
 
     public ResponseEntity<SuccessResponse<User>> createUser(@RequestBody User user) {
-         userService.createUser(user);
-         SuccessResponse<User> response = new SuccessResponse<>("Användare har skapats", user);
+        User createdUser = userRepository.save(user);
+         SuccessResponse<User> response = new SuccessResponse<>("Användare har skapats", createdUser);
          return ResponseEntity.ok(response);
     }
 
@@ -47,7 +47,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
 
     public ResponseEntity<SuccessResponse<User>> getUser(@PathVariable Integer id) {
-        User user = userService.getUserById(id);
+        User user = userRepository.getUserById(id);
         SuccessResponse<User> response = new SuccessResponse<>("Användaren med ID " + id + " har hämtats", user);
         return ResponseEntity.ok(response);
     }
@@ -61,9 +61,8 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
 
 
-   public ResponseEntity<List<User>> getAllUsers() {
-    List<User> users = userService.getAllUsers();
-    return ResponseEntity.ok(users);
+   public List<User> getAllUsers() {
+     return userRepository.findAll();
     }
 
     @PutMapping("/{id}")  
@@ -74,7 +73,8 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
 
     public ResponseEntity<SuccessResponse<User>> updateUser(@PathVariable Integer id, @RequestBody User userDetails) {
-        userService.updateUser(id, userDetails);
+        userDetails.setId(id);
+        userRepository.save(userDetails);
         SuccessResponse<User> response = new SuccessResponse<>("Användaren med ID " + id + " har uppdaterats", userDetails);
         return ResponseEntity.ok(response);
     }
@@ -86,17 +86,18 @@ public class UserController {
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
     
-    public ResponseEntity<SuccessResponse<User>> deleteUser(@PathVariable Integer id) {
-        userService.deleteUser(id);
+    public ResponseEntity<SuccessResponse<User>> deleteUser(@PathVariable int id, @RequestBody User user) {
+        user.setId(id);
+        userRepository.delete(user);
         SuccessResponse<User> response = new SuccessResponse<>("Användaren med ID " + id + " har raderats.");
         return ResponseEntity.ok(response);
 }
 
     //Säker rutt för USER_ROLE
     @GetMapping("/info")
-    public User getUserDetails(){
+    public Optional<User> getUserDetails(){
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findByEmail(email).get();
+        return userRepository.findByEmail(email);
     }
 
 

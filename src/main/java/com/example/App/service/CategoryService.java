@@ -1,43 +1,20 @@
 package com.example.App.service;
 
-import com.example.App.execption.ResourceNotFoundException;
-import com.example.App.model.Category;
-import com.example.App.repository.CategoryRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.App.model.Category;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CategoryService {
+public interface CategoryService {
+
+    Category createCategory(Category category); 
+    Category getCategoryById(Integer id); 
+    List<Category>getAllCategories();
+    Category updateCategory(Integer id, Category categoryDetails);
+    void deleteCategory(Integer id);
+
  
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    public Category createCategory(Category category) {
-        return categoryRepository.save(category);
-    }
-
-    public Category getCategoryById(Integer id) {
-        return categoryRepository.findById(id)
-         .orElseThrow(() -> new ResourceNotFoundException("Kategori med id " + id + " hittades inte."));
-    }
-
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
-
-    public Category updateCategory(Integer id, Category categoryDetails) {
-        Category category = categoryRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("Kategori med id " + id + " hittades inte."));
-    
-        category.setName(categoryDetails.getName());
-        return categoryRepository.save(category);
-    }
-    
-    public void deleteCategory(Integer id) {
-        categoryRepository.deleteById(id);
-    }
 }
 

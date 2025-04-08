@@ -25,12 +25,12 @@ POST    /api/users/create               Registrerar ny användare
 PUT     /api/users/{id}                 Uppdaterar specifik användare
 DELETE  /api/users/{id}                 Raderar specifik användare
 
-//UserActity (denna fungerar inte. 401 unauthorized, och en del error)
-GET     /api/users                       Hämtar alla användare
-GET     /api/users/{id}                 Hämtar specifik användare
-POST    /api/users/create               Registrerar ny användare
-PUT     /api/users/{id}                 Uppdaterar specifik användare
-DELETE  /api/users/{id}                 Raderar specifik användare
+//UserActity 
+GET     /api/useractivities                      Hämtar alla användaraktiviteter
+GET     /api/useractivities/{id}                 Hämtar specifik användaraktivitet
+POST    /api/useractivities/create               Registrerar ny användaraktivitet
+PUT     /api/useractivities/{id}                 Uppdaterar specifik användaraktivitet
+DELETE  /api/useractivities/{id}                 Raderar specifik användaraktivitet
 
 ------------------------------------------------------
 

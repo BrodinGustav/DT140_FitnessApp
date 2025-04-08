@@ -28,7 +28,7 @@ public class Activity {
         //Standard konstruktor enligt JPA
     }
 
-    public Activity(String name, Integer points) {
+    public Activity(String name, Integer points, Category category) {
         this.name = name;
         this.points = points;
         }

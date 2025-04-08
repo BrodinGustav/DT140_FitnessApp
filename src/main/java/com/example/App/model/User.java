@@ -1,5 +1,7 @@
 package com.example.App.model;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
@@ -45,6 +47,7 @@ public class User {
     //Relationer 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserActivity>activities;
    
 
     

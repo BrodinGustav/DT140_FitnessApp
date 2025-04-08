@@ -1,5 +1,6 @@
 package com.example.App.model;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ public class Category {
     private String name;
 
 
+
     
     //Konstruktor
     protected Category() {
@@ -35,7 +37,10 @@ public class Category {
     //Relationer
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    
+
+
+
+ 
     // Getters and setters
     
     public Integer getId() {
@@ -53,8 +58,9 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-    
  
+
+
     @Override
     public String toString() {
         return "Category [id=" + id + ", name=" + name + ", activities=" + "]";

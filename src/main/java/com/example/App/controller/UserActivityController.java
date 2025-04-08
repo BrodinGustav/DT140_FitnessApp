@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.App.model.UserActivity;
+import com.example.App.repository.UserActivityRepository;
 import com.example.App.response.SuccessResponse;
 import com.example.App.service.UserActivityService;
 
@@ -20,7 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 public class UserActivityController {
 
     @Autowired
-    private UserActivityService userActivityService;
+    private UserActivityRepository userActivityRepository;
 
     
     @PostMapping("/create")
@@ -31,9 +32,9 @@ public class UserActivityController {
     @ApiResponse(responseCode = "500", description = "Internt serverfel")
 
      
-    public ResponseEntity<SuccessResponse<UserActivity>> addActivityForUser(@RequestBody UserActivity userActivity) {
-        userActivityService.saveUserActivity(userActivity);
-        SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet har skapats", userActivity);
+    public ResponseEntity<SuccessResponse<UserActivity>> createUserActivity(@RequestBody UserActivity userActivity) {
+        UserActivity createdUserActivity = userActivityRepository.save(userActivity);
+        SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet har skapats", createdUserActivity);
         return ResponseEntity.ok(response);
     }
 
@@ -47,18 +48,7 @@ content = @Content(mediaType = "application/json", schema = @Schema(implementati
 @ApiResponse(responseCode = "404", description = "Användaraktiviteter hittades inte")
 
 public ResponseEntity<List<UserActivity>> getAllUserActivities() {
-    List<UserActivity> userActivities = userActivityService.getAllUserActivities();
-
-    if (userActivities.isEmpty()) {
-        return ResponseEntity.noContent().build(); //204 No Content om listan är tom
-    }
-
-    
-    System.out.println(userActivities);
-    userActivities.forEach(System.out::println);
-     
-
-    return ResponseEntity.ok(userActivities); //200 OK om det finns användare
+    return (ResponseEntity<List<UserActivity>>) userActivityRepository.findAll();
 }
 
 
@@ -72,7 +62,7 @@ content = @Content(mediaType = "application/json", schema = @Schema(implementati
 @ApiResponse(responseCode = "404", description = "Användaraktivitet hittades inte")
 
 public ResponseEntity<SuccessResponse<UserActivity>> getUserActivityById(@PathVariable Integer id) {
-    UserActivity userActivity = userActivityService.getUserActivityById(id);
+    UserActivity userActivity = userActivityRepository.getUserActivityById(id);
     SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet med ID " + id + " har hämtats", userActivity);
     return ResponseEntity.ok(response);
 
@@ -90,6 +80,7 @@ content = @Content(mediaType = "application/json", schema = @Schema(implementati
 
 public ResponseEntity<SuccessResponse<UserActivity>> updateUserActivity(@PathVariable int id, @RequestBody UserActivity userActivity) {
     userActivity.setId(id);
+    userActivityRepository.save(userActivity);
     SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet med ID " + id + " har uppdaterats", userActivity);
     return ResponseEntity.ok(response);
 }
@@ -107,48 +98,11 @@ content = @Content(mediaType = "application/json", schema = @Schema(implementati
 
 public ResponseEntity<SuccessResponse<UserActivity>> deleteUserActivity(@PathVariable int id, @RequestBody UserActivity userActivity) {
     userActivity.setId(id);
-    userActivityService.deleteUserActivity(id);
+    userActivityRepository.delete(userActivity);
     SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet med ID " + id + " har raderats.");
     return ResponseEntity.ok(response);
 }
 
 
     
-
-
-
-
-    
-    @Override
-    public String toString() {
-        return "UserActivityController [userActivityService=" + userActivityService + "]";
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((userActivityService == null) ? 0 : userActivityService.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        UserActivityController other = (UserActivityController) obj;
-        if (userActivityService == null) {
-            if (other.userActivityService != null)
-                return false;
-        } else if (!userActivityService.equals(other.userActivityService))
-            return false;
-        return true;
-    }
-
-    
-
 }

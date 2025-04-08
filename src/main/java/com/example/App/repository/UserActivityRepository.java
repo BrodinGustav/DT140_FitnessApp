@@ -8,4 +8,5 @@ import com.example.App.model.UserActivity;
 
 public interface UserActivityRepository extends JpaRepository<UserActivity, Integer> {
     List<UserActivity> findByUserId(Integer userId);
+    UserActivity getUserActivityById(Integer id);
 }
