@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.App.dto.CreateUserActivityDTO;
+import com.example.App.dto.GetUserActivityDTO;
 import com.example.App.model.UserActivity;
 import com.example.App.repository.UserActivityRepository;
 import com.example.App.response.SuccessResponse;
@@ -36,8 +37,8 @@ public class UserActivityController {
     @ApiResponse(responseCode = "500", description = "Internt serverfel")
 
      
-    public ResponseEntity<SuccessResponse<UserActivity>> createUserActivity(@RequestBody UserActivity userActivity) {
-        UserActivity createdUserActivity = userActivityRepository.save(userActivity);
+    public ResponseEntity<SuccessResponse<UserActivity>> createUserActivity(@RequestBody CreateUserActivityDTO userActivity) {
+        UserActivity createdUserActivity = userActivityService.createUserActivity(userActivity);
         SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet har skapats", createdUserActivity);
         return ResponseEntity.ok(response);
     }
@@ -51,10 +52,10 @@ public class UserActivityController {
 content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserActivity.class)))
 @ApiResponse(responseCode = "404", description = "Användaraktiviteter hittades inte")
 
-public ResponseEntity<List<UserActivity>> getAllUserActivities() {
-    return (ResponseEntity<List<UserActivity>>) userActivityRepository.findAll();
+public ResponseEntity<List<UserActivity>> getAllUserActivities(@RequestBody GetUserActivityDTO getUserActivity) {
+    List<UserActivity> activities = userActivityService.getAllUserActivities(getUserActivity);
+    return ResponseEntity.ok(activities);
 }
-
 
 //GET via id
 

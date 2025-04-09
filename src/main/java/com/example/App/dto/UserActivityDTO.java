@@ -10,7 +10,6 @@ public class UserActivityDTO {
     private Integer userId;
     private Integer activityId;
     private int points;
-    private String category;
     private String userName;  
     private String activityName;  
 
@@ -57,14 +56,6 @@ public class UserActivityDTO {
 
     public void setPoints(int points) {
         this.points = points;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getUserName() {

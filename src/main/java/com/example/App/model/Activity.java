@@ -10,10 +10,13 @@ public class Activity {
 
     
     public enum ActivityName {
-        STYRKA,
-        BALETT,
-        POLEDANCING,
-        SIMMNING
+        GYM,
+        LÖPNING,
+        SIMMNING,
+        GOLF,
+        FOTBOLL,
+        ISHOCKEY,
+        LÄNGDSKIDOR
     }
 
     //Properties

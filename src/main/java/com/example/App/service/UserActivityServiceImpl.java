@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.App.dto.CreateUserActivityDTO;
+import com.example.App.dto.GetUserActivityDTO;
 import com.example.App.execption.ResourceNotFoundException;
 import com.example.App.model.UserActivity;
 import com.example.App.repository.ActivityRepository;
@@ -42,8 +43,11 @@ public class UserActivityServiceImpl implements UserActivityService {
     }
 
     @Override
-    public List<UserActivity> getAllUserActivities() {
-        return userActivityRepository.findAll();
+    public List<UserActivity> getAllUserActivities(GetUserActivityDTO getUserActivity) {
+        var user = userRepository.findById(getUserActivity.getUserId())
+        .orElseThrow();
+
+        return userActivityRepository.findByUserId(getUserActivity.getUserId());
     }
     
     @Override

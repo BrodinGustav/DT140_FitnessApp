@@ -7,8 +7,7 @@ public class ActivityDTO {
     private Integer id;
     private String name;
     private int points;
-    private Integer categoryId;
-
+   
     
     // Getters and setters
     
@@ -36,11 +35,4 @@ public class ActivityDTO {
         this.points = points;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
     }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-}
