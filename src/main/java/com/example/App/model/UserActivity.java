@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import java.time.Duration;
 
 @Entity
 public class UserActivity {
@@ -20,6 +21,7 @@ public class UserActivity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private int points;
+    private Duration duration;
     @CreationTimestamp
     private LocalDateTime timestamp;
 
@@ -33,78 +35,64 @@ public class UserActivity {
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
-   
-
-    // Getters and setters
-    
-    
-
-
-    
-    @Override
-    public String toString() {
-        return "UserActivity [id=" + id + ", user=null" + user + ", activity=" + activity + ", points=" + points + "]";
-    }
-
-    
     public Integer getId() {
         return id;
     }
-
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-
     public int getPoints() {
         return points;
     }
-
 
     public void setPoints(int points) {
         this.points = points;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
 
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
-
 
     public User getUser() {
         return user;
     }
 
-
     public void setUser(User user) {
         this.user = user;
     }
-
 
     public Activity getActivity() {
         return activity;
     }
 
-
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
-
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + points;
+        result = prime * result + ((duration == null) ? 0 : duration.hashCode());
+        result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
         result = prime * result + ((user == null) ? 0 : user.hashCode());
         result = prime * result + ((activity == null) ? 0 : activity.hashCode());
-        result = prime * result + points;
         return result;
     }
 
@@ -122,6 +110,18 @@ public class UserActivity {
                 return false;
         } else if (!id.equals(other.id))
             return false;
+        if (points != other.points)
+            return false;
+        if (duration == null) {
+            if (other.duration != null)
+                return false;
+        } else if (!duration.equals(other.duration))
+            return false;
+        if (timestamp == null) {
+            if (other.timestamp != null)
+                return false;
+        } else if (!timestamp.equals(other.timestamp))
+            return false;
         if (user == null) {
             if (other.user != null)
                 return false;
@@ -132,11 +132,18 @@ public class UserActivity {
                 return false;
         } else if (!activity.equals(other.activity))
             return false;
-        if (points != other.points)
-            return false;
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "UserActivity [id=" + id + ", points=" + points + ", duration=" + duration + ", timestamp=" + timestamp
+                + ", user=" + user + ", activity=" + activity + "]";
+    }
+
+
+    
+    
 
 
 }
