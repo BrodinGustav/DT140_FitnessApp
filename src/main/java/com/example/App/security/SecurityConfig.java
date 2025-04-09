@@ -2,7 +2,6 @@ package com.example.App.security;
 
 import com.example.App.service.MyUserDetailsService;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,62 +18,75 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import jakarta.servlet.http.HttpServletResponse;
 
-@Configuration 
-@Profile("!nosecurity")
-@EnableWebSecurity //Sätter igång security för applikationen
+@Configuration
+// @Profile("!nosecurity")
+@EnableWebSecurity // Sätter igång security för applikationen
 public class SecurityConfig {
 
-    //Injecting Dependencies
-    @Autowired
-    private JWTFilter filter;
-    @Autowired
-    private MyUserDetailsService uds;
+        // Injecting Dependencies
+        @Autowired
+        private JWTFilter filter;
+        @Autowired
+        private MyUserDetailsService uds;
 
-   
-    //Metod som konfiguerar security kring app
+        // Metod som konfiguerar security kring app
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable()) // Stänger av CSRF-skydd
-                .cors(cors -> {}) // Aktiverar CORS
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                return http
+                                .csrf(csrf -> csrf.disable()) // Stänger av CSRF-skydd
+                                .cors(cors -> {
+                                }) // Aktiverar CORS
 
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()  // Tillåter ej autentiserade anrop
-                        .requestMatchers("/api/users/**").permitAll()  // Tillåter ej autentiserade anrop
-                        .requestMatchers("/api/activities/**").permitAll()  // Tillåter ej autentiserade anrop
-                        .requestMatchers("/api/categories/**").permitAll()  // Tillåter ej autentiserade anrop
-                        .requestMatchers("/api/useractivities/**").permitAll()  // Tillåter ej autentiserade anrop
-                        .requestMatchers("/api/user/**").hasRole("USER") // Kräver "USER"-roll
-                        .anyRequest().authenticated() // Alla andra requests kräver autentisering
-                )
-            
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Stateless sessionhantering
-                )
+                                //För felsökning
+                                .authorizeHttpRequests(auth -> auth
+                                                .anyRequest().permitAll())
+                                /*
+                                 * .authorizeHttpRequests(auth -> auth
+                                 * .requestMatchers("/api/auth/**").permitAll() // Tillåter ej autentiserade
+                                 * anrop
+                                 * .requestMatchers("/api/users/**").permitAll() // Tillåter ej autentiserade
+                                 * anrop
+                                 * .requestMatchers("/api/activities/**").permitAll() // Tillåter ej
+                                 * autentiserade anrop
+                                 * .requestMatchers("/api/categories/**").permitAll() // Tillåter ej
+                                 * autentiserade anrop
+                                 * .requestMatchers("/api/useractivities/**").permitAll() // Tillåter ej
+                                 * autentiserade anrop
+                                 * .requestMatchers("/api/user/**").hasRole("USER") // Kräver "USER"-roll
+                                 * .anyRequest().authenticated() // Alla andra requests kräver autentisering
+                                 * )
+                                 */
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Stateless
+                                                                                                        // sessionhantering
+                                )
 
-                .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint((request, response, authException) -> 
-                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
-                )
+                                .exceptionHandling(exceptions -> exceptions
+                                                .authenticationEntryPoint((request, response, authException) -> response
+                                                                .sendError(HttpServletResponse.SC_UNAUTHORIZED,
+                                                                                "Unauthorized")))
 
-                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class) // Lägg till JWT-filter
-                .userDetailsService(uds) // Använd UserDetailsService
-                .httpBasic(httpBasic -> {}) // Aktivera HTTP Basic Authentication
-                .build();
-    }
+                                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class) // Lägg till
+                                                                                                     // JWT-filter
+                                .userDetailsService(uds) // Använd UserDetailsService
+                                .httpBasic(httpBasic -> {
+                                }) // Aktivera HTTP Basic Authentication
+                                .build();
+        }
 
-    // Skapar bean för password encoder
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        // Skapar bean för password encoder
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-    // Exponerar bean av authentication manager vilken kör
-    // authentication processen
-   @Bean
-public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-    return authenticationConfiguration.getAuthenticationManager();
-}
+        // Exponerar bean av authentication manager vilken kör
+        // authentication processen
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+                        throws Exception {
+                return authenticationConfiguration.getAuthenticationManager();
+        }
 
 }

@@ -7,9 +7,15 @@ import com.example.App.model.Activity.ActivityName;
 public class CreateUserActivityDTO {
 
     //Properties
+    private Integer Id;
     private Integer userId;
     private ActivityName activityName;
     private Duration duration;
+
+
+    public Integer getId() {
+        return Id;
+    }
 
     public Integer getUserId() {
         return userId;

@@ -19,12 +19,13 @@ import java.io.IOException;
 
 @Component //Komponent. Spring Boot skapar och hanterar JWTFilter Bean
 // JWTFilter bean kan nu injectas i andra delar av koden
-@Profile("!nosecurity")
+//@Profile("!nosecurity")
 public class JWTFilter extends OncePerRequestFilter {
 
     // Injecting Dependencies
     @Autowired private MyUserDetailsService userDetailsService;
     @Autowired private JWTUtil jwtUtil;
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -34,6 +35,8 @@ public class JWTFilter extends OncePerRequestFilter {
                                         //Debugg
                                         System.out.println("JWT Filter fungerar"); 
         
+                                        System.out.println("Request path: " + request.getServletPath());
+
         //Extraherar "Authorization" header
         String authHeader = request.getHeader("Authorization");
 
@@ -82,5 +85,17 @@ public class JWTFilter extends OncePerRequestFilter {
 
         //Fortsätter med fitler chain
         filterChain.doFilter(request, response);
+    }
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getServletPath();
+        System.out.println("Checking if filter should apply to path: " + path);
+        System.out.println("Request path: " + request.getServletPath());
+
+        return path.startsWith("/api/auth")
+            || path.startsWith("/api/users")
+            || path.startsWith("/api/activities")
+            || path.startsWith("/api/categories")
+            || path.startsWith("/api/useractivities");
     }
 }

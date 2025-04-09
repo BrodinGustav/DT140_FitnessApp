@@ -36,13 +36,14 @@ public class UserActivityServiceImpl implements UserActivityService {
         }
         
         var user = userRepository.findById(putUserActivity.getUserId())
-
+        
         .orElseThrow();
 
         var userActivity = new UserActivity();
         userActivity.setUser(user);
         userActivity.setActivity(category);
         userActivity.setPoints(100);
+        userActivity.setActivity(category);
         userActivity.setDuration(putUserActivity.getDuration());
 
         return userActivityRepository.save(userActivity);   //Fungerar även som update och create
@@ -59,8 +60,9 @@ public class UserActivityServiceImpl implements UserActivityService {
         .orElseThrow(() -> new ResourceNotFoundException("UserActivity med id " + id + " hittades inte."));
     }
 
+    /* 
     @Override
-     public UserActivity updateUserActivity(Integer id, UserActivity userActivityDetails) {
+     public UserActivity updateUserActivity(Integer id, CreateUserActivityDTO userActivity) {
         UserActivity userActivity = userActivityRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("UserActivity med id " + id + " hittades inte."));
         
@@ -68,6 +70,8 @@ public class UserActivityServiceImpl implements UserActivityService {
         
         return userActivityRepository.save(userActivity);
     }
+*/
+
 
     @Override
     public void deleteUserActivity(Integer id) {
