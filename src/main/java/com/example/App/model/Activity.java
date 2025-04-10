@@ -12,7 +12,7 @@ public class Activity {
     public enum ActivityName {
         GYM,
         LÖPNING,
-        SIMMNING,
+        SIMNING,
         GOLF,
         FOTBOLL,
         ISHOCKEY,

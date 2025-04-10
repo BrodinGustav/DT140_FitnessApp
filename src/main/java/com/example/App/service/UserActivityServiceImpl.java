@@ -43,7 +43,6 @@ public class UserActivityServiceImpl implements UserActivityService {
         userActivity.setUser(user);
         userActivity.setActivity(category);
         userActivity.setPoints(100);
-        userActivity.setActivity(category);
         userActivity.setDuration(putUserActivity.getDuration());
 
         return userActivityRepository.save(userActivity);   //Fungerar även som update och create
