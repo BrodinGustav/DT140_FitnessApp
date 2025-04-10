@@ -1,6 +1,7 @@
 package com.example.App.controller;
 
 import com.example.App.model.User;
+import com.example.App.dto.RegisterDTO;
 import com.example.App.model.LoginCredentials;
 import com.example.App.repository.UserRepository;
 import com.example.App.security.JWTUtil;
@@ -29,7 +30,7 @@ public class AuthController {
 
     //POST för register
     @PostMapping("/register")
-    public Map<String, Object> registerHandler(@RequestBody User user){
+    public RegisterDTO registerHandler(@RequestBody User user){
         
         // Encoding Password med Bcrypt
         String encodedPass = passwordEncoder.encode(user.getPassword());
@@ -37,15 +38,19 @@ public class AuthController {
         // Sätter det encoded password
         user.setPassword(encodedPass);
 
-        // Persisting the User Entity to H2 Database
+        //Spara användare
         user = userRepository.save(user);
 
         // Genererar JWT
         String token = jwtUtil.generateToken(user.getEmail());
 
-        // Svarar with JWT
+         // Returnera namn, email och token
+        return new RegisterDTO(user.getName(), user.getEmail(), token);
+
+       /*  Svarar with JWT
         return Collections.singletonMap("jwt-token", token);
-    }
+        */
+        }
 
     // Definierar funktion som hanterar POST rutt för att logga in en user
     @PostMapping("/login")
