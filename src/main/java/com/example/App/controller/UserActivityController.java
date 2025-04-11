@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.App.dto.CreateUserActivityDTO;
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/useractivities")
@@ -37,11 +39,10 @@ public class UserActivityController {
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserActivity.class)))
     @ApiResponse(responseCode = "500", description = "Internt serverfel")
 
-     
-    public ResponseEntity<SuccessResponse<UserActivity>> createUserActivity(@RequestBody CreateUserActivityDTO userActivity) {
-        UserActivity createdUserActivity = userActivityService.createUserActivity(userActivity);
-        SuccessResponse<UserActivity> response = new SuccessResponse<>("Användaraktivitet har skapats", createdUserActivity);
-        return ResponseEntity.ok(response);
+    @Transactional
+    public ResponseEntity<SuccessResponse<UserActivity>> createUserActivity(@RequestBody @Valid CreateUserActivityDTO userActivity) {
+        userActivityService.createUserActivity(userActivity);
+        return ResponseEntity.noContent().build();
     }
 
 

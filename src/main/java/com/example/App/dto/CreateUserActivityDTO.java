@@ -2,37 +2,40 @@ package com.example.App.dto;
 
 import java.time.Duration;
 
-import com.example.App.model.Activity.ActivityName;
+import org.springframework.validation.annotation.Validated;
 
+import com.example.App.model.Activity;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
+@Validated
 public class CreateUserActivityDTO {
 
     //Properties
-    private Integer Id;
+    @NotNull
     private Integer userId;
-    private ActivityName activityName;
-    private Duration duration;
-
-
-    public Integer getId() {
-        return Id;
-    }
+    @Valid
+    private Activity activity;
+    @NotNull
+    private Integer seconds;
 
     public Integer getUserId() {
         return userId;
     }
-    public ActivityName getActivityName() {
-        return activityName;
+    public Activity getActivity() {
+        return activity;
     }
-    public Duration getDuration() {
-        return duration;
+    public Integer getSeconds() {
+        return seconds;
     }
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((userId == null) ? 0 : userId.hashCode());
-        result = prime * result + ((activityName == null) ? 0 : activityName.hashCode());
-        result = prime * result + ((duration == null) ? 0 : duration.hashCode());
+        result = prime * result + ((activity == null) ? 0 : activity.hashCode());
+        result = prime * result + ((seconds == null) ? 0 : seconds.hashCode());
         return result;
     }
     @Override
@@ -49,19 +52,19 @@ public class CreateUserActivityDTO {
                 return false;
         } else if (!userId.equals(other.userId))
             return false;
-        if (activityName != other.activityName)
+        if (activity != other.activity)
             return false;
-        if (duration == null) {
-            if (other.duration != null)
+        if (seconds == null) {
+            if (other.seconds != null)
                 return false;
-        } else if (!duration.equals(other.duration))
+        } else if (!seconds.equals(other.seconds))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "PutUserActivityDTO [userId=" + userId + ", activityName=" + activityName + ", duration=" + duration + "]";
+        return "PutUserActivityDTO [userId=" + userId + ", activityName=" + activity + ", duration=" + seconds + "]";
     }
     
 }

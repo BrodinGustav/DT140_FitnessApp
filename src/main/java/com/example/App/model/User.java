@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -46,8 +47,21 @@ public class User {
     
     //Relationer 
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserActivity>activities;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "id")
+    private List<UserActivity> activities;
+
+    public List<UserActivity> userActivities() {
+        return this.activities;
+    }
+
+    public void addUserActivity(UserActivity userActivity) {
+        this.activities.add(userActivity);
+    }
+
+    public void setUserActivities(List<UserActivity> userActivities) {
+        this.activities = userActivities;
+    }
    
 
     
@@ -134,6 +148,14 @@ public class User {
         } else if (!email.equals(other.email))
             return false;
         return true;
+    }
+
+    public List<UserActivity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<UserActivity> activities) {
+        this.activities = activities;
     }
 
 

@@ -89,7 +89,7 @@ public class JWTFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getServletPath();
-        System.out.println("Checking if filter should apply to path: " + path);
+       // System.out.println("Kollar om filter ska gälla endpoint " + path);
         System.out.println("Request path: " + request.getServletPath());
 
         return path.startsWith("/api/auth")

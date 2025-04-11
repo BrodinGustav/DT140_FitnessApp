@@ -4,12 +4,13 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import java.time.Duration;
 
 @Entity
@@ -27,12 +28,7 @@ public class UserActivity {
 
     //Relationer
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @OneToOne
-    @JoinColumn(name = "activity_id")
+    @Enumerated(EnumType.STRING)
     private Activity activity;
 
     public Integer getId() {
@@ -67,14 +63,6 @@ public class UserActivity {
         this.timestamp = timestamp;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Activity getActivity() {
         return activity;
     }
@@ -91,7 +79,6 @@ public class UserActivity {
         result = prime * result + points;
         result = prime * result + ((duration == null) ? 0 : duration.hashCode());
         result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
-        result = prime * result + ((user == null) ? 0 : user.hashCode());
         result = prime * result + ((activity == null) ? 0 : activity.hashCode());
         return result;
     }
@@ -122,11 +109,6 @@ public class UserActivity {
                 return false;
         } else if (!timestamp.equals(other.timestamp))
             return false;
-        if (user == null) {
-            if (other.user != null)
-                return false;
-        } else if (!user.equals(other.user))
-            return false;
         if (activity == null) {
             if (other.activity != null)
                 return false;
@@ -138,7 +120,7 @@ public class UserActivity {
     @Override
     public String toString() {
         return "UserActivity [id=" + id + ", points=" + points + ", duration=" + duration + ", timestamp=" + timestamp
-                + ", user=" + user + ", activity=" + activity + "]";
+                + ", activity=" + activity + "]";
     }
 
 

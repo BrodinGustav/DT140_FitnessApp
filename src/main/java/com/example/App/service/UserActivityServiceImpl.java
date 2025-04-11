@@ -1,24 +1,25 @@
 package com.example.App.service;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.App.dto.CreateUserActivityDTO;
 import com.example.App.dto.GetUserActivityDTO;
 import com.example.App.execption.ResourceNotFoundException;
 import com.example.App.model.UserActivity;
-import com.example.App.repository.ActivityRepository;
 import com.example.App.repository.UserActivityRepository;
 import com.example.App.repository.UserRepository;
 
 
-@Service
-public class UserActivityServiceImpl implements UserActivityService {
 
-    @Autowired
-    private ActivityRepository activityRepository;
+@Service
+@Transactional(propagation = Propagation.MANDATORY)
+public class UserActivityServiceImpl implements UserActivityService {
     @Autowired
     private UserRepository userRepository;
     
@@ -27,31 +28,22 @@ public class UserActivityServiceImpl implements UserActivityService {
     
 
     @Override
-    public UserActivity createUserActivity(CreateUserActivityDTO putUserActivity) {
-
-        var category = activityRepository.getActivityByName(putUserActivity.getActivityName());
+    public void createUserActivity(CreateUserActivityDTO putUserActivity) {
         
-        if (category == null) {
-            throw new ResourceNotFoundException("Aktiviteten '" + putUserActivity.getActivityName() + "' kunde inte hittas.");
-        }
-        
-        var user = userRepository.findById(putUserActivity.getUserId())
-        
-        .orElseThrow();
+        var user = userRepository.findById(putUserActivity.getUserId()).orElseThrow();
 
         var userActivity = new UserActivity();
-        userActivity.setUser(user);
-        userActivity.setActivity(category);
+        userActivity.setActivity(putUserActivity.getActivity());
         userActivity.setPoints(100);
-        userActivity.setDuration(putUserActivity.getDuration());
+        userActivity.setDuration(Duration.ofSeconds(putUserActivity.getSeconds()));
 
-        return userActivityRepository.save(userActivity);   //Fungerar även som update och create
+        System.out.println(putUserActivity);
+        System.out.println(userActivity);
+
+        user.addUserActivity(userActivity);
+
+        userRepository.save(user);   //Fungerar även som update och create
     }
-
-    @Override
-    public List<UserActivity> getAllUserActivities(GetUserActivityDTO getUserActivity) {
-        return userActivityRepository.findByUserId(getUserActivity.getUserId());
-        }
     
     @Override
     public UserActivity getUserActivityById(Integer id) {
