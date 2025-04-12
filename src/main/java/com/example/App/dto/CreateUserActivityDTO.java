@@ -1,7 +1,5 @@
 package com.example.App.dto;
 
-import java.time.Duration;
-
 import org.springframework.validation.annotation.Validated;
 
 import com.example.App.model.Activity;

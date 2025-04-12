@@ -17,8 +17,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
-    //Properties
+
+    // Properties
 
     private Integer id;
 
@@ -26,16 +26,14 @@ public class User {
 
     private String email;
 
-     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //Undviker att lösenordet inkluderas i JSON-svaret 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Undviker att lösenordet inkluderas i JSON-svaret
     private String password;
 
     private String role;
 
-
-    
-    //Konstruktor
+    // Konstruktor
     protected User() {
-        //Standard konstruktor enligt JPA
+        // Standard konstruktor enligt JPA
     }
 
     public User(String name, String email, String role) {
@@ -44,12 +42,13 @@ public class User {
         this.role = role;
     }
 
-    
-    //Relationer 
+    // Relationer
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id")
     private List<UserActivity> activities;
+
+    // Getters and setters
 
     public List<UserActivity> userActivities() {
         return this.activities;
@@ -62,11 +61,15 @@ public class User {
     public void setUserActivities(List<UserActivity> userActivities) {
         this.activities = userActivities;
     }
-   
 
-    
-    // Getters and setters
-    
+    public List<UserActivity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<UserActivity> activities) {
+        this.activities = activities;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -107,7 +110,6 @@ public class User {
         this.role = role;
     }
 
-    
     @Override
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", email=" + email + ", role=" + role + "]";
@@ -150,15 +152,4 @@ public class User {
         return true;
     }
 
-    public List<UserActivity> getActivities() {
-        return activities;
-    }
-
-    public void setActivities(List<UserActivity> activities) {
-        this.activities = activities;
-    }
-
-
-    
 }
-

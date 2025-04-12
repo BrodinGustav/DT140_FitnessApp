@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.App.dto.CreateUserActivityDTO;
-import com.example.App.dto.GetUserActivityDTO;
 import com.example.App.execption.ResourceNotFoundException;
 import com.example.App.model.UserActivity;
 import com.example.App.repository.UserActivityRepository;
@@ -25,7 +24,6 @@ public class UserActivityServiceImpl implements UserActivityService {
     
  @Autowired
     private UserActivityRepository userActivityRepository;
-    
 
     @Override
     public void createUserActivity(CreateUserActivityDTO putUserActivity) {
@@ -50,6 +48,33 @@ public class UserActivityServiceImpl implements UserActivityService {
         return userActivityRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("UserActivity med id " + id + " hittades inte."));
     }
+
+
+    public List<Integer> totalResultat() {
+        return userRepository.findAll().stream()
+            .map(user -> {
+                return user.userActivities().stream()
+                    .map(UserActivity::getPoints)
+                    .toList();
+            })
+            .map(pointList -> {
+                return pointList.stream()
+                    .reduce(Integer::sum)
+                    .orElse(0);
+            })
+            .sorted((a, b) -> {
+                if(a < b) {
+                    return 1;
+                }
+                if(b < a) {
+                    return -1;
+                }
+                return 0;
+            })
+            .toList();
+    }
+
+
 
     /* 
     @Override
