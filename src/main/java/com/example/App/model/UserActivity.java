@@ -33,10 +33,6 @@ public class UserActivity {
     @Enumerated(EnumType.STRING)
     private Activity activity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     public Integer getId() {
         return id;
     }

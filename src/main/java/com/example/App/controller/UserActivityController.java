@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.App.dto.CreateUserActivityDTO;
+import com.example.App.dto.LeaderboardDTO;
 import com.example.App.model.UserActivity;
 import com.example.App.repository.UserActivityRepository;
 import com.example.App.response.SuccessResponse;
@@ -70,8 +71,8 @@ public ResponseEntity<List<UserActivity>> getAllUserActivities(@RequestBody GetU
 //Test med stream för GET
 @GetMapping ("/stream")
 @Transactional(readOnly = true)
-public ResponseEntity<List<Integer>> totalResultat() {
-    List<Integer> resultat = userActivityService.totalResultat();
+public ResponseEntity<List<LeaderboardDTO>> totalResultat() {
+    List<LeaderboardDTO> resultat = userActivityService.totalResultat();
     return ResponseEntity.ok(resultat);
 }
 

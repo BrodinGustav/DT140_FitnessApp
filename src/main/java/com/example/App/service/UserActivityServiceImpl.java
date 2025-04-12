@@ -2,6 +2,7 @@ package com.example.App.service;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.App.dto.CreateUserActivityDTO;
+import com.example.App.dto.LeaderboardDTO;
 import com.example.App.execption.ResourceNotFoundException;
 import com.example.App.model.UserActivity;
 import com.example.App.repository.UserActivityRepository;
@@ -24,6 +26,8 @@ public class UserActivityServiceImpl implements UserActivityService {
     
  @Autowired
     private UserActivityRepository userActivityRepository;
+
+
 
     @Override
     public void createUserActivity(CreateUserActivityDTO putUserActivity) {
@@ -49,30 +53,21 @@ public class UserActivityServiceImpl implements UserActivityService {
         .orElseThrow(() -> new ResourceNotFoundException("UserActivity med id " + id + " hittades inte."));
     }
 
+//Metod för att hämta användares poäng, namn och aktivitet samt tid för utskrift till Leaderboard på fronten
+@Transactional(readOnly = true)
+public List<LeaderboardDTO> totalResultat() {
+    return userRepository.findAll().stream()  // Hämta alla användare
+        .flatMap(user -> user.getActivities().stream()  // Platta ut aktiviteter för varje användare
+            .map(userActivity -> new LeaderboardDTO(
+                user.getName(),  // Hämta användarens namn
+                userActivity.getActivity().toString(),  // Hämta aktivitetens namn
+                userActivity.getPoints(),  // Hämta poäng
+                (int) userActivity.getDuration().toMinutes()  // Hämta duration i minuter (om du vill ha det)
+            ))
+        )
+        .collect(Collectors.toList());  // Samla alla DTO:n i en lista och returnera den
+}
 
-    public List<Integer> totalResultat() {
-        return userRepository.findAll().stream()
-            .map(user -> {
-                return user.userActivities().stream()
-                    .map(UserActivity::getPoints)
-                    .toList();
-            })
-            .map(pointList -> {
-                return pointList.stream()
-                    .reduce(Integer::sum)
-                    .orElse(0);
-            })
-            .sorted((a, b) -> {
-                if(a < b) {
-                    return 1;
-                }
-                if(b < a) {
-                    return -1;
-                }
-                return 0;
-            })
-            .toList();
-    }
 
 
 
