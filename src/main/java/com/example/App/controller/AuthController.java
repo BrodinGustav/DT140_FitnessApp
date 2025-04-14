@@ -6,6 +6,7 @@ import com.example.App.model.LoginCredentials;
 import com.example.App.repository.UserRepository;
 import com.example.App.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@Profile("!nosecurity")
 public class AuthController {
 
     // Injecting Dependencies

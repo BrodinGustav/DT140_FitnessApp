@@ -19,15 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
-@Profile("!nosecurity")
+@Profile("nosecurity")
 @EnableWebSecurity // Sätter igång security för applikationen
-public class SecurityConfig {
-
-        // Injecting Dependencies
-        @Autowired
-        private JWTFilter filter;
-        @Autowired
-        private MyUserDetailsService uds;
+public class NoSecurityConfig {
 
         // Metod som konfiguerar security kring app
 
@@ -40,7 +34,8 @@ public class SecurityConfig {
 
                                 //För felsökning
                                 .authorizeHttpRequests(auth -> auth
-                                                .anyRequest().permitAll())
+                                                .anyRequest()
+                                                .permitAll())
                                 /*
                                  * .authorizeHttpRequests(auth -> auth
                                  * .requestMatchers("/api/auth/**").permitAll() // Tillåter ej autentiserade
@@ -60,33 +55,10 @@ public class SecurityConfig {
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Stateless
                                                                                                         // sessionhantering
-                                )
-
-                                .exceptionHandling(exceptions -> exceptions
-                                                .authenticationEntryPoint((request, response, authException) -> response
-                                                                .sendError(HttpServletResponse.SC_UNAUTHORIZED,
-                                                                                "Unauthorized")))
-
-                                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class) // Lägg till
-                                                                                                     // JWT-filter
-                                .userDetailsService(uds) // Använd UserDetailsService
+                                )                                                       // JWT-filter
                                 .httpBasic(httpBasic -> {
                                 }) // Aktivera HTTP Basic Authentication
                                 .build();
-        }
-
-        // Skapar bean för password encoder
-        @Bean
-        public PasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder();
-        }
-
-        // Exponerar bean av authentication manager vilken kör
-        // authentication processen
-        @Bean
-        public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-                        throws Exception {
-                return authenticationConfiguration.getAuthenticationManager();
         }
 
 }

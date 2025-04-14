@@ -1,6 +1,7 @@
 package com.example.App.service;
 
 import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,32 +52,37 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     // Metod för att hämta användares poäng, namn och aktivitet samt tid för
     // utskrift till Leaderboard på fronten
-@Transactional(readOnly = true)
-public List<LeaderboardDTO> totalResultat() {
-    return userRepository.findAll().stream() 
-    
-    .map(user -> {
-        int totalPoints = user.getActivities().stream()
-        .mapToInt(a -> a.getPoints() * a.getDuration().toMinutesPart())
-        .sum();
+    @Transactional(readOnly = true)
+    public List<LeaderboardDTO> totalResultat() {
+        var now = OffsetDateTime.now().minusDays(7);
+        var userList = userRepository.findAll();
+        
+        return userList.stream()
+                .map(user -> {
+                    int totalPoints = user.getActivities().stream()
+                            .filter(activity -> activity.getTimestamp().compareTo(now.toLocalDateTime()) > 1) //Filtrering av aktiviteter inom de senaste 7 dagarna
+                            .mapToInt(a -> (int) (((long) a.getPoints()) * a.getDuration().toMinutes()))
+                            .sum();
+                            System.out.println(String.format("%s, %s", user.getName(), totalPoints));
+                    return new LeaderboardDTO(
+                            user.getName(),
+                            totalPoints);
+                })
+                .toList(); // Samla alla DTO:n i en lista och returnera den
 
-    return new LeaderboardDTO(
-        user.getName(),
-        totalPoints
-    );
-}).collect(Collectors.toList()); // Samla alla DTO:n i en lista och returnera den
-
-}
+    }
 
     /*
-     * @Override
+     * @Transactional
      * public UserActivity updateUserActivity(Integer id, CreateUserActivityDTO
-     * userActivity) {
+     * putUserActivity) {
      * UserActivity userActivity = userActivityRepository.findById(id)
      * .orElseThrow(() -> new ResourceNotFoundException("UserActivity med id " + id
      * + " hittades inte."));
      * 
-     * userActivity.setPoints(userActivityDetails.getPoints());
+     * userActivity.setActivity(putUserActivity.getActivity());
+     * userActivity.setPoints(100);
+     * userActivity.setDuration(Duration.ofSeconds(putUserActivity.getSeconds()));
      * 
      * return userActivityRepository.save(userActivity);
      * }

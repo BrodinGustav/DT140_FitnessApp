@@ -3,11 +3,14 @@ package com.example.App.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.example.App.dto.UpdateUserDTO;
 import com.example.App.execption.ResourceNotFoundException;
 import com.example.App.model.User;
 import com.example.App.repository.UserRepository;
 
+@Service
 public class UserServiceImpl implements UserService {
 
        @Autowired
@@ -34,12 +37,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(Integer id, User userDetails) {
+    public User updateUser(Integer id, UpdateUserDTO userDetails) {
         User user = userRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Användare med id " + id + " hittades inte."));
-        
-        user.setName(userDetails.getName());
-        user.setEmail(userDetails.getEmail());
+
+        userDetails.getEmail()
+            .ifPresent(user::setEmail);
+        userDetails.getName()
+            .ifPresent(user::setName);;
         return userRepository.save(user);
     }
 

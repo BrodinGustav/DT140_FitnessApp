@@ -24,8 +24,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
-@Profile("!nosecurity")
-public class UserController {
+@Profile("nosecurity")
+public class TestUserController {
 
     @Autowired
     private UserService userService;
@@ -52,15 +52,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/update")  
+    @PutMapping("/{id}")  
 
     @Operation(summary = "Uppdaterar användare", description = "Uppdaterar användare i databasen.")
     @ApiResponse(responseCode = "201", description = "Användare uppdaterad",
     content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))   
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
 
-    public ResponseEntity<SuccessResponse<User>> updateUser(@RequestBody @Valid UpdateUserDTO userDetails) {
-        var id = SecurityContext.getThreadLocal().getId();
+    public ResponseEntity<SuccessResponse<User>> updateUser(@PathVariable int id, @RequestBody @Valid UpdateUserDTO userDetails) {
         userService.updateUser(id, userDetails);
         return ResponseEntity.noContent().build();
     }

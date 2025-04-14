@@ -1,9 +1,14 @@
 package com.example.App.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.example.App.model.LoginCredentials;
+import com.example.App.model.UserInfo;
+import com.example.App.repository.UserRepository;
+import com.example.App.security.SecurityContext.SecurityContextCloseable;
 import com.example.App.service.MyUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,12 +23,13 @@ import java.io.IOException;
 
 @Component //Komponent. Spring Boot skapar och hanterar JWTFilter Bean
 // JWTFilter bean kan nu injectas i andra delar av koden
-//@Profile("!nosecurity")
+@Profile("!nosecurity")
 public class JWTFilter extends OncePerRequestFilter {
 
     // Injecting Dependencies
     @Autowired private MyUserDetailsService userDetailsService;
     @Autowired private JWTUtil jwtUtil;
+    @Autowired private UserRepository userRepository;
 
 
     @Override
@@ -38,6 +44,9 @@ public class JWTFilter extends OncePerRequestFilter {
 
         //Extraherar "Authorization" header
         String authHeader = request.getHeader("Authorization");
+
+        String email = "UNKNOWN";
+        Integer id = null;
 
         //Kontroll om header innehåller en Bearer token
         if(authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")){
@@ -57,13 +66,14 @@ public class JWTFilter extends OncePerRequestFilter {
 
                 try{
                     //Verifierar token och extraherar email
-                    String email = jwtUtil.validateTokenAndRetrieveSubject(jwt);
+                    email = jwtUtil.validateTokenAndRetrieveSubject(jwt);
 
                     //Debugg
                     System.out.println("Email extracted from JWT: " + email);
 
                     //Fetchar User Details
                     UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                    id = userRepository.findByEmail(email).map(user -> user.getId()).orElse(null);
 
                     //Skapar Authentication Token
                     UsernamePasswordAuthenticationToken authToken =
@@ -82,8 +92,12 @@ public class JWTFilter extends OncePerRequestFilter {
             }
         }
 
-        //Fortsätter med fitler chain
-        filterChain.doFilter(request, response);
+        try(var closeable = new SecurityContextCloseable()) {
+            closeable.putInThreadLocal(new UserInfo(id, "TEST", email));
+            //Fortsätter med fitler chain
+            filterChain.doFilter(request, response);
+        }
+
     }
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -91,10 +105,6 @@ public class JWTFilter extends OncePerRequestFilter {
        // System.out.println("Kollar om filter ska gälla endpoint " + path);
         System.out.println("Request path: " + request.getServletPath());
 
-        return path.startsWith("/api/auth")
-            || path.startsWith("/api/users")
-            || path.startsWith("/api/activities")
-            || path.startsWith("/api/categories")
-            || path.startsWith("/api/useractivities");
+        return path.startsWith("/api/auth");
     }
 }

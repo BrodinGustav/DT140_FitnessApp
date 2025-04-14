@@ -5,8 +5,14 @@ public class LoginCredentials {
     private String name;
     private String email;
     private String password;
+
+    
     
 
+    public LoginCredentials(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
     public String getName() {
         return name;
     }
