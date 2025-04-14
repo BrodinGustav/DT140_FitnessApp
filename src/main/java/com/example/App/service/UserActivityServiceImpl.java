@@ -2,6 +2,7 @@ package com.example.App.service;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,8 +67,10 @@ public class UserActivityServiceImpl implements UserActivityService {
                             System.out.println(String.format("%s, %s", user.getName(), totalPoints));
                     return new LeaderboardDTO(
                             user.getName(),
-                            totalPoints);
+                            totalPoints, totalPoints);
                 })
+                
+                .sorted(Comparator.comparingInt(LeaderboardDTO::getTotalPoints).reversed())
                 .toList(); // Samla alla DTO:n i en lista och returnera den
 
     }

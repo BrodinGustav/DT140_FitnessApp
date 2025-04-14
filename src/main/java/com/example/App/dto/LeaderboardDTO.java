@@ -6,11 +6,19 @@ public class LeaderboardDTO {
     private String activity;
     private int points;
     private int duration;
+    private int totalPoints;
 
-    public LeaderboardDTO(String name, int points) {
+
+    public LeaderboardDTO(String name, int points, int totalPoints) {
         this.name = name;
         this.points = points;
+        this.totalPoints = totalPoints;
     }
+
+    public int getTotalPoints() {
+        return totalPoints;
+    }
+
 
     public String getName() {
         return name;
