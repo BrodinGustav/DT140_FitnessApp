@@ -1,6 +1,7 @@
 package com.example.App.service;
 
 import java.time.OffsetDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<WeeklyActivityPointsDTO> getWeeklyPointsByActivityForUser(int id) {
     
-        // Definiera den tidsperiod du vill kolla på (de senaste 7 dagarna)
+        // Definiera den tidsperiod (de senaste 7 dagarna)
         OffsetDateTime now = OffsetDateTime.now().minusDays(7);
     
         // Hämta användaren från databasen
@@ -82,10 +83,11 @@ public class UserServiceImpl implements UserService {
                 Collectors.summingInt(a -> (int) (((long) a.getPoints()) * a.getDuration().toMinutes()))
             ));
     
-        // Skapa en lista av WeeklyActivityPointsDTO, inklusive userId
+        // Skapa en lista av WeeklyActivityPointsDTO
         return activityToPoints.entrySet().stream()
-            .map(entry -> new WeeklyActivityPointsDTO(id, entry.getKey(), entry.getValue()))  // Lägg till userId här
-            .toList(); // Modernare än collect(Collectors.toList())
+            .map(entry -> new WeeklyActivityPointsDTO(id, entry.getKey(), entry.getValue()))  // Lägg till id för användare här
+            .sorted(Comparator.comparingInt(WeeklyActivityPointsDTO::getPoints).reversed())     //Sorterar från högst till lägst
+            .toList(); 
     }
     
     
