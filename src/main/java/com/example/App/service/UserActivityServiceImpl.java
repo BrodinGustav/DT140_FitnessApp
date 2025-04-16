@@ -34,7 +34,7 @@ public class UserActivityServiceImpl implements UserActivityService {
 
         var userActivity = new UserActivity();
         userActivity.setActivity(putUserActivity.getActivity());
-        userActivity.setPoints(100);
+        userActivity.setPoints(10);
         userActivity.setDuration(Duration.ofSeconds(putUserActivity.getSeconds()));
 
         System.out.println(putUserActivity);
@@ -70,26 +70,10 @@ public class UserActivityServiceImpl implements UserActivityService {
                             totalPoints, totalPoints);
                 })
                 
-                .sorted(Comparator.comparingInt(LeaderboardDTO::getTotalPoints).reversed())
+                .sorted(Comparator.comparingInt(LeaderboardDTO::getTotalPoints).reversed()) //Sorterar listan från högst till lägst
                 .toList(); // Samla alla DTO:n i en lista och returnera den
 
     }
-
-    /*
-     * @Transactional
-     * public UserActivity updateUserActivity(Integer id, CreateUserActivityDTO
-     * putUserActivity) {
-     * UserActivity userActivity = userActivityRepository.findById(id)
-     * .orElseThrow(() -> new ResourceNotFoundException("UserActivity med id " + id
-     * + " hittades inte."));
-     * 
-     * userActivity.setActivity(putUserActivity.getActivity());
-     * userActivity.setPoints(100);
-     * userActivity.setDuration(Duration.ofSeconds(putUserActivity.getSeconds()));
-     * 
-     * return userActivityRepository.save(userActivity);
-     * }
-     */
 
     @Override
     public void deleteUserActivity(Integer id) {

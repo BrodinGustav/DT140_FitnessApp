@@ -13,11 +13,8 @@ public interface UserActivityService {
 
     void createUserActivity(CreateUserActivityDTO userActivity);
 
-    //List<UserActivity> getAllUserActivities(GetUserActivityDTO getUserAllActivity);
-
     UserActivity getUserActivityById(Integer id);
 
-   // UserActivity updateUserActivity(Integer id, CreateUserActivityDTO userActivity);
    
     void deleteUserActivity(Integer id);
 

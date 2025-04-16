@@ -54,18 +54,11 @@ public class UserActivityController {
 content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserActivity.class)))
 @ApiResponse(responseCode = "404", description = "Användaraktiviteter hittades inte")
 
-/*OBS ! BYTT TILL REPOSITORY OCH FINDALL FÖR ATT SE OM FETCH FUNGERAR. DET FUNGERAR BÄTTRE. HUR LÖSA? */
+
 public ResponseEntity<List<UserActivity>> getAllUserActivities() {
     List<UserActivity> activities = userActivityRepository.findAll();
     return ResponseEntity.ok(activities);
 }
-
-/* 
-public ResponseEntity<List<UserActivity>> getAllUserActivities(@RequestBody GetUserActivityDTO getUserActivity) {
-    List<UserActivity> activities = userActivityService.getAllUserActivities(getUserActivity);
-    return ResponseEntity.ok(activities);
-}
-*/
 
 
 //Test med stream för GET

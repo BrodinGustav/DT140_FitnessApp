@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -73,6 +74,7 @@ public class AuthController {
     @PostMapping("/login")
     public Map<String, Object> loginHandler(@RequestBody LoginCredentials body) {
         try {
+
             // Skapar en Authentication Token som innehåller credentials för authenticating
             // Token används som input till authentication process
             UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
@@ -81,12 +83,25 @@ public class AuthController {
             // Authenticating the Login Credentials
             authManager.authenticate(authInputToken);
 
+            // Hämta användaren från databasen
+            User user = userRepository.findByEmail(body.getEmail())
+            .orElseThrow(() -> new RuntimeException("Användare hittades ej."));
+            
             // Om Authentication lyckades
             // Generera JWT
             String token = jwtUtil.generateToken(body.getEmail());
 
-            // Svara med JWT
-            return Collections.singletonMap("jwt-token", token);
+            // Svara med JWT + user info
+            Map<String, Object>response = new HashMap<>();
+            response.put("jwt-token", token);
+            response.put("id", user.getId());
+            response.put("name", user.getName());
+            response.put("email", user.getEmail());
+
+            return response;
+
+            /*return Collections.singletonMap("jwt-token", token); */
+
         } catch (AuthenticationException authExc) {
 
             System.err.println("Error during authentication: " + authExc.getMessage());
