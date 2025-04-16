@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.App.dto.CreateUserActivityDTO;
 import com.example.App.dto.LeaderboardDTO;
+import com.example.App.dto.WeeklyActivityPointsDTO;
 import com.example.App.model.UserActivity;
 
 @Service
@@ -15,12 +16,8 @@ public interface UserActivityService {
 
     UserActivity getUserActivityById(Integer id);
 
-   
     void deleteUserActivity(Integer id);
 
     List<LeaderboardDTO> totalResultat();
-
-
-
 
 }

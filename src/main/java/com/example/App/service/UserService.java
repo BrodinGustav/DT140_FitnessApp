@@ -1,6 +1,7 @@
 package com.example.App.service;
 
 import com.example.App.dto.UpdateUserDTO;
+import com.example.App.dto.WeeklyActivityPointsDTO;
 import com.example.App.model.User;
 import com.example.App.service.UserService;
 
@@ -16,5 +17,7 @@ public interface UserService {
     User updateUser(Integer id, UpdateUserDTO userDetails);
 
     void deleteUser(Integer id);
+
+    List<WeeklyActivityPointsDTO> getWeeklyPointsByActivityForUser(int id);
 
 }

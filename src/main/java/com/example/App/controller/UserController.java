@@ -1,10 +1,12 @@
 package com.example.App.controller;
 
 import com.example.App.dto.UpdateUserDTO;
+import com.example.App.dto.WeeklyActivityPointsDTO;
 import com.example.App.model.User;
 import com.example.App.repository.UserRepository;
 import com.example.App.response.SuccessResponse;
 import com.example.App.security.SecurityContext;
+import com.example.App.service.UserActivityService;
 import com.example.App.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,6 +32,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private final UserActivityService userActivityService;
+
+    public UserController(UserService userService, UserActivityService userActivityService) {
+        this.userService = userService;
+        this.userActivityService = userActivityService;
+    }
+
     @GetMapping("/{id}")
 
     @Operation(summary = "Hämtar specifik användare", description = "Hämtar specifik användare baserat på id.")
@@ -52,11 +61,16 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/update")  
+    @GetMapping("/{id}/weekly-activity-points")
+    public ResponseEntity<List<WeeklyActivityPointsDTO>> getWeeklyPointsByActivity(@PathVariable Integer id) {
+        var result = userService.getWeeklyPointsByActivityForUser(id);
+        return ResponseEntity.ok(result);
+    }
+
+    @PutMapping("/update")
 
     @Operation(summary = "Uppdaterar användare", description = "Uppdaterar användare i databasen.")
-    @ApiResponse(responseCode = "201", description = "Användare uppdaterad",
-    content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))   
+    @ApiResponse(responseCode = "201", description = "Användare uppdaterad", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
 
     public ResponseEntity<SuccessResponse<User>> updateUser(@RequestBody @Valid UpdateUserDTO userDetails) {

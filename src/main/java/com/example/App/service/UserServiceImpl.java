@@ -1,13 +1,20 @@
 package com.example.App.service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.App.dto.UpdateUserDTO;
+import com.example.App.dto.WeeklyActivityPointsDTO;
 import com.example.App.execption.ResourceNotFoundException;
+import com.example.App.model.Activity;
 import com.example.App.model.User;
+import com.example.App.model.UserActivity;
 import com.example.App.repository.UserRepository;
 
 @Service
@@ -55,5 +62,31 @@ public class UserServiceImpl implements UserService {
     userRepository.delete(user);
     }
 
+
+
+    @Transactional(readOnly = true)
+    public List<WeeklyActivityPointsDTO> getWeeklyPointsByActivityForUser(int id) {
+    
+        // Definiera den tidsperiod du vill kolla på (de senaste 7 dagarna)
+        OffsetDateTime now = OffsetDateTime.now().minusDays(7);
+    
+        // Hämta användaren från databasen
+        var user = userRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Användare med id " + id + " hittades inte."));
+    
+        // Gruppera aktiviteter efter aktivitetstyp och summera poäng baserat på varaktigheten
+        Map<Activity, Integer> activityToPoints = user.getActivities().stream()
+            .filter(activity -> activity.getTimestamp().compareTo(now.toLocalDateTime()) > 0) // Endast senaste 7 dagar
+            .collect(Collectors.groupingBy(
+                UserActivity::getActivity,
+                Collectors.summingInt(a -> (int) (((long) a.getPoints()) * a.getDuration().toMinutes()))
+            ));
+    
+        // Skapa en lista av WeeklyActivityPointsDTO, inklusive userId
+        return activityToPoints.entrySet().stream()
+            .map(entry -> new WeeklyActivityPointsDTO(id, entry.getKey(), entry.getValue()))  // Lägg till userId här
+            .toList(); // Modernare än collect(Collectors.toList())
+    }
+    
     
 }
