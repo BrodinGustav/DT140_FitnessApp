@@ -41,25 +41,19 @@ public class SecurityConfig {
                                 //För felsökning
                                 .authorizeHttpRequests(auth -> auth
                                                 .anyRequest().permitAll())
-                                /*
-                                 * .authorizeHttpRequests(auth -> auth
-                                 * .requestMatchers("/api/auth/**").permitAll() // Tillåter ej autentiserade
-                                 * anrop
-                                 * .requestMatchers("/api/users/**").permitAll() // Tillåter ej autentiserade
-                                 * anrop
-                                 * .requestMatchers("/api/activities/**").permitAll() // Tillåter ej
-                                 * autentiserade anrop
-                                 * .requestMatchers("/api/categories/**").permitAll() // Tillåter ej
-                                 * autentiserade anrop
-                                 * .requestMatchers("/api/useractivities/**").permitAll() // Tillåter ej
-                                 * autentiserade anrop
-                                 * .requestMatchers("/api/user/**").hasRole("USER") // Kräver "USER"-roll
-                                 * .anyRequest().authenticated() // Alla andra requests kräver autentisering
-                                 * )
-                                 */
+                           /*      
+                                  .authorizeHttpRequests(auth -> auth
+                                  .requestMatchers("/api/auth/**").permitAll()                 // Tillåter ej autentiserade anrop
+                                  .requestMatchers("/api/users/**").permitAll()                // Tillåter ej autentiserade anrop
+                                  .requestMatchers("/api/activities/**").permitAll()           // Tillåter ej autentiserade anrop
+                                  .requestMatchers("/api/categories/**").permitAll()           // Tillåter ej autentiserade anrop
+                                  .requestMatchers("/api/useractivities/**").permitAll()       // Tillåter ej autentiserade anrop
+                                  .requestMatchers("/api/user/**").hasRole("USER")             // Kräver "USER"-roll
+                                  .anyRequest().authenticated()                                // Alla andra requests kräver autentisering
+                                  )
+                              */   
                                 .sessionManagement(session -> session
-                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Stateless
-                                                                                                        // sessionhantering
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Stateless sessionhantering
                                 )
 
                                 .exceptionHandling(exceptions -> exceptions
@@ -67,11 +61,10 @@ public class SecurityConfig {
                                                                 .sendError(HttpServletResponse.SC_UNAUTHORIZED,
                                                                                 "Unauthorized")))
 
-                                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class) // Lägg till
-                                                                                                     // JWT-filter
-                                .userDetailsService(uds) // Använd UserDetailsService
-                                .httpBasic(httpBasic -> {
-                                }) // Aktivera HTTP Basic Authentication
+                                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class) // Lägg till JWT-filter
+                                .userDetailsService(uds)                                                          // Använd UserDetailsService
+                                .httpBasic(httpBasic -> {                                                         // Aktivera HTTP Basic Authentication
+                                }) 
                                 .build();
         }
 
@@ -81,8 +74,7 @@ public class SecurityConfig {
                 return new BCryptPasswordEncoder();
         }
 
-        // Exponerar bean av authentication manager vilken kör
-        // authentication processen
+        // Exponerar bean av authentication manager vilken kör authentication processen
         @Bean
         public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
                         throws Exception {

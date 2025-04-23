@@ -5,7 +5,7 @@ import com.example.App.model.Activity;
 public class WeeklyActivityPointsDTO {
     private Integer id;
     private Activity activity;
-    private int totalPoints;
+   
     private int points;
 
     public WeeklyActivityPointsDTO(Integer id, Activity activity, Integer points) {
@@ -34,12 +34,5 @@ public class WeeklyActivityPointsDTO {
         this.activity = activity;
     }
 
-    public int getTotalPoints() {
-        return totalPoints;
-    }
-
-    public void setTotalPoints(int totalPoints) {
-        this.totalPoints = totalPoints;
-    }
 
 }
