@@ -30,6 +30,7 @@ public class UserActivityServiceImpl implements UserActivityService {
     @Autowired
     private UserActivityRepository userActivityRepository;
 
+
     @Override
     public void createUserActivity(CreateUserActivityDTO putUserActivity) {
 
@@ -79,9 +80,10 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     }
 
-    @Override
     public void deleteUserActivity(Integer id) {
-        userActivityRepository.deleteById(id);
+        UserActivity activity = userActivityRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Aktivitet med id " + id + " finns inte."));
+        userActivityRepository.delete(activity);
     }
 
 }

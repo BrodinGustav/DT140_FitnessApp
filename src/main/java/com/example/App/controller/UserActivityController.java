@@ -105,8 +105,7 @@ public class UserActivityController {
 
     public ResponseEntity<SuccessResponse<UserActivity>> deleteUserActivity(@PathVariable int id,
             @RequestBody UserActivity userActivity) {
-        userActivity.setId(id);
-        userActivityRepository.delete(userActivity);
+                userActivityService.deleteUserActivity(id);
         SuccessResponse<UserActivity> response = new SuccessResponse<>(
                 "Användaraktivitet med ID " + id + " har raderats.");
         return ResponseEntity.ok(response);

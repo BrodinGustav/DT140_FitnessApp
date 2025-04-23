@@ -1,9 +1,5 @@
 package com.example.App.model;
 
-import java.util.Arrays;
-import java.util.List;
-
-import jakarta.persistence.Entity;
 
 public enum Activity {
         GYM(50),
@@ -25,16 +21,4 @@ public enum Activity {
         }
 
         
-/* 
-        public static List<activityList> thing() {
-            record Thing(String name, int value) {}
-            return Arrays.stream(Activity.values())
-            .map(activity -> {
-                return new Thing(activity.name, activity.value);
-            })
-            .toList();
-        }
-            */
-
-
 }
