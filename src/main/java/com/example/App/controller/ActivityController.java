@@ -27,6 +27,6 @@ public class ActivityController {
 
    @GetMapping
    public ResponseEntity<List<ActivityDTO>> getAllActivities() {
-       return ResponseEntity.ok(ActivityService.getAllActivities());
+       return ResponseEntity.ok(activityService.getAllActivities());
    }
 }

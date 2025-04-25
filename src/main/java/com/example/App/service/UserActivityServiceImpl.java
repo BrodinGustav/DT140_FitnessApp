@@ -36,10 +36,11 @@ public class UserActivityServiceImpl implements UserActivityService {
 
         var user = userRepository.findById(putUserActivity.getUserId()).orElseThrow();
 
+        var duration = Duration.ofSeconds(putUserActivity.getSeconds());
         var userActivity = new UserActivity();
         userActivity.setActivity(putUserActivity.getActivity());
-        userActivity.setPoints(10);
-        userActivity.setDuration(Duration.ofSeconds(putUserActivity.getSeconds()));
+        userActivity.setPoints((int) (putUserActivity.getActivity().getValue() * duration.toMinutes()));
+        userActivity.setDuration(duration);
 
         System.out.println(putUserActivity);
         System.out.println(userActivity);

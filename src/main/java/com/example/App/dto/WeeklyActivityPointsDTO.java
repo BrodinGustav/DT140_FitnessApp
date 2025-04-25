@@ -1,29 +1,29 @@
 package com.example.App.dto;
 
+import java.util.List;
+
 import com.example.App.model.Activity;
+import com.example.App.model.UserActivity;
 
 public class WeeklyActivityPointsDTO {
-    private Integer id;
+    private int userId;
     private Activity activity;
-   
     private int points;
+    private List<UserActivity> activities;
 
-    public WeeklyActivityPointsDTO(Integer id, Activity activity, Integer points) {
-        this.id = id;
+    public WeeklyActivityPointsDTO(int userId, Activity activity, int points, List<UserActivity> activities) {
+        this.userId = userId;
         this.activity = activity;
         this.points = points;
+        this.activities = activities;
     }
 
-    public Integer getPoints() {
-        return points;
+    public int getUserId() {
+        return userId;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Activity getActivity() {
@@ -34,5 +34,22 @@ public class WeeklyActivityPointsDTO {
         this.activity = activity;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public List<UserActivity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<UserActivity> activities) {
+        this.activities = activities;
+    }
+
+    
 
 }

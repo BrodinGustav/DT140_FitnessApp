@@ -75,7 +75,7 @@ public class UserController {
     @ApiResponse(responseCode = "201", description = "Användare raderad", content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
     @ApiResponse(responseCode = "404", description = "Användaren hittades inte")
 
-    public ResponseEntity<SuccessResponse<User>> deleteUser(@PathVariable int id, @RequestBody User user) {
+    public ResponseEntity<SuccessResponse<User>> deleteUser(@PathVariable int id) { 
         userService.deleteUser(id);
         SuccessResponse<User> response = new SuccessResponse<>("Användaren med ID " + id + " har raderats.");
         return ResponseEntity.ok(response);

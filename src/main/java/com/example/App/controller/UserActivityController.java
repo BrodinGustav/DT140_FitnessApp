@@ -24,6 +24,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/useractivities")
 @CrossOrigin(origins = "http://localhost:4200")
+@Transactional
 public class UserActivityController {
 
     @Autowired
@@ -103,8 +104,7 @@ public class UserActivityController {
     @ApiResponse(responseCode = "201", description = "Användaraktivitet raderad", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserActivity.class)))
     @ApiResponse(responseCode = "404", description = "Användaraktivitet hittades inte")
 
-    public ResponseEntity<SuccessResponse<UserActivity>> deleteUserActivity(@PathVariable int id,
-            @RequestBody UserActivity userActivity) {
+    public ResponseEntity<SuccessResponse<UserActivity>> deleteUserActivity(@PathVariable int id) {
                 userActivityService.deleteUserActivity(id);
         SuccessResponse<UserActivity> response = new SuccessResponse<>(
                 "Användaraktivitet med ID " + id + " har raderats.");
