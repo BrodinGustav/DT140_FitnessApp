@@ -100,7 +100,8 @@ public class UserServiceImpl implements UserService {
 
                 return new AbstractMap.SimpleEntry<>(entry.getKey(), new Thingimajigg(entry.getValue(), totSum));
             })
-            .sorted()
+            //Sorterar efter totSum (Sorteras i fallande ordning baserat på poäng)
+            .sorted((entry1, entry2) -> Integer.compare(entry2.getValue().points(), entry1.getValue().points()))
             .toList();
     
         // Skapa en lista av WeeklyActivityPointsDTO 
