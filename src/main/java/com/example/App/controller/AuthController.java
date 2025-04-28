@@ -5,8 +5,13 @@ import com.example.App.dto.RegisterDTO;
 import com.example.App.model.LoginCredentials;
 import com.example.App.repository.UserRepository;
 import com.example.App.security.JWTUtil;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -37,42 +42,52 @@ public class AuthController {
 
     // POST för register
     @PostMapping("/register")
-    public RegisterDTO registerHandler(@RequestBody User user) {
+    public ResponseEntity<RegisterDTO> registerHandler(@RequestBody @Valid User user) {
 
-        // Kontroll om användare redan finns
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Användare finns redan.");
+        try {
+
+            // Kontroll om användare redan finns
+            if (userRepository.existsByEmail(user.getEmail())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new RegisterDTO("Användare finns redan.", "", ""));
+            }
+
+            // Encoding Password med Bcrypt
+            String encodedPass = passwordEncoder.encode(user.getPassword());
+
+            // Sätter det encoded password
+            user.setPassword(encodedPass);
+
+            // Sätter användarens namn om det inte är null
+            if (user.getName() == null || user.getName().isEmpty()) {
+                user.setName("Anonym"); // Fallback
+            }
+
+            // Spara användare
+            user = userRepository.save(user);
+
+            // Genererar JWT
+            String token = jwtUtil.generateToken(user.getEmail());
+
+            // Returnera namn, email och token
+            return ResponseEntity.ok(new RegisterDTO(user.getName(), user.getEmail(), token));
+
+            /*
+             * Svarar with JWT
+             * return Collections.singletonMap("jwt-token", token);
+             */
+
+        } catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new RegisterDTO("Registreringen misslyckades.", "", ""));
         }
 
-        // Encoding Password med Bcrypt
-        String encodedPass = passwordEncoder.encode(user.getPassword());
-
-        // Sätter det encoded password
-        user.setPassword(encodedPass);
-
-        //Sätter användarens namn om det inte är null
-        if (user.getName() == null || user.getName().isEmpty()) {
-            user.setName("Anonym"); //Fallback
-        }
-
-        // Spara användare
-        user = userRepository.save(user);
-
-        // Genererar JWT
-        String token = jwtUtil.generateToken(user.getEmail());
-
-        // Returnera namn, email och token
-        return new RegisterDTO(user.getName(), user.getEmail(), token);
-
-        /*
-         * Svarar with JWT
-         * return Collections.singletonMap("jwt-token", token);
-         */
     }
 
     // Definierar funktion som hanterar POST rutt för att logga in en user
     @PostMapping("/login")
-    public Map<String, Object> loginHandler(@RequestBody LoginCredentials body) {
+    public ResponseEntity<Map<String, Object>> loginHandler(@RequestBody @Valid LoginCredentials body) {
         try {
 
             // Skapar en Authentication Token som innehåller credentials för authenticating
@@ -85,28 +100,39 @@ public class AuthController {
 
             // Hämta användaren från databasen
             User user = userRepository.findByEmail(body.getEmail())
-            .orElseThrow(() -> new RuntimeException("Användare hittades ej."));
-            
+                    .orElseThrow(() -> new RuntimeException("Användare hittades ej."));
+
             // Om Authentication lyckades
             // Generera JWT
             String token = jwtUtil.generateToken(body.getEmail());
 
             // Svara med JWT + user info
-            Map<String, Object>response = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
             response.put("jwt-token", token);
             response.put("id", user.getId());
             response.put("name", user.getName());
             response.put("email", user.getEmail());
 
-            return response;
+            return ResponseEntity.ok(response);
 
-            /*return Collections.singletonMap("jwt-token", token); */
+            /* return Collections.singletonMap("jwt-token", token); */
 
         } catch (AuthenticationException authExc) {
 
-            System.err.println("Error during authentication: " + authExc.getMessage());
-            throw new RuntimeException("Invalid Login Credentials");
-        }
-    }
+            //401-meddelande ifall autentisering misslyckas
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Fel användarnamn/lösenord");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+        
+         } catch (Exception e) {
+
+            //500-meddelande ifall generellt fel
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("Message", "Serverfel.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+         }}
+
+          
 
 }
