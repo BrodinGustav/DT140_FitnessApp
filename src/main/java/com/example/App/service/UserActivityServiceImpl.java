@@ -68,7 +68,7 @@ public class UserActivityServiceImpl implements UserActivityService {
                 .map(user -> {
                     int totalPoints = user.getActivities().stream()
                             .filter(activity -> activity.getTimestamp().compareTo(now.toLocalDateTime()) > 1) //Filtrering av aktiviteter inom de senaste 7 dagarna
-                            .mapToInt(a -> (int) (((long) a.getPoints()) * a.getDuration().toMinutes()))
+                            .mapToInt(UserActivity::getPoints)
                             .sum();
                             System.out.println(String.format("%s, %s", user.getName(), totalPoints));
                     return new LeaderboardDTO(
