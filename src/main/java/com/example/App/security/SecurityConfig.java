@@ -33,34 +33,27 @@ public class SecurityConfig {
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 return http
                                 .csrf(csrf -> csrf.disable()) // Stänger av CSRF-skydd
-                                .cors(cors -> {
-                                }) // Aktiverar CORS
+                                .cors(cors -> {})             // Aktiverar CORS
 
-                                //För felsökning
+                                //Behörighetsregler
                                 .authorizeHttpRequests(auth -> auth
-                                                .anyRequest().permitAll())
-                           /*      
-                                  .authorizeHttpRequests(auth -> auth
+                                                                  
                                   .requestMatchers("/api/auth/**").permitAll()                 // Tillåter ej autentiserade anrop
-                                  .requestMatchers("/api/users/**").permitAll()                // Tillåter ej autentiserade anrop
-                                  .requestMatchers("/api/activities/**").permitAll()           // Tillåter ej autentiserade anrop
-                                  .requestMatchers("/api/useractivities/**").permitAll()       // Tillåter ej autentiserade anrop
                                   .anyRequest().authenticated()                                // Alla andra requests kräver autentisering
                                   )
-                              */   
+                                 
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Stateless sessionhantering
                                 )
 
                                 .exceptionHandling(exceptions -> exceptions
-                                                .authenticationEntryPoint((request, response, authException) -> response
-                                                                .sendError(HttpServletResponse.SC_UNAUTHORIZED,
-                                                                                "Unauthorized")))
+                                                .authenticationEntryPoint((request, response, authException) -> 
+                                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
+                                )
 
                                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class) // Lägg till JWT-filter
                                 .userDetailsService(uds)                                                          // Använd UserDetailsService
-                                .httpBasic(httpBasic -> {                                                         // Aktivera HTTP Basic Authentication
-                                }) 
+                                .httpBasic(httpBasic -> {})                                                       // Aktivera HTTP Basic Authentication
                                 .build();
         }
 
