@@ -5,7 +5,6 @@ import com.example.App.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
-@Profile("!nosecurity")
 @EnableWebSecurity // Sätter igång security för applikationen
 public class SecurityConfig {
 
@@ -46,9 +44,7 @@ public class SecurityConfig {
                                   .requestMatchers("/api/auth/**").permitAll()                 // Tillåter ej autentiserade anrop
                                   .requestMatchers("/api/users/**").permitAll()                // Tillåter ej autentiserade anrop
                                   .requestMatchers("/api/activities/**").permitAll()           // Tillåter ej autentiserade anrop
-                                  .requestMatchers("/api/categories/**").permitAll()           // Tillåter ej autentiserade anrop
                                   .requestMatchers("/api/useractivities/**").permitAll()       // Tillåter ej autentiserade anrop
-                                  .requestMatchers("/api/user/**").hasRole("USER")             // Kräver "USER"-roll
                                   .anyRequest().authenticated()                                // Alla andra requests kräver autentisering
                                   )
                               */   

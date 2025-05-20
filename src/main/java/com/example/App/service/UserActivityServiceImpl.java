@@ -4,8 +4,6 @@ import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.App.dto.CreateUserActivityDTO;
 import com.example.App.dto.LeaderboardDTO;
-import com.example.App.dto.WeeklyActivityPointsDTO;
 import com.example.App.execption.ResourceNotFoundException;
-import com.example.App.model.Activity;
 import com.example.App.model.UserActivity;
 import com.example.App.repository.UserActivityRepository;
 import com.example.App.repository.UserRepository;
@@ -36,16 +32,16 @@ public class UserActivityServiceImpl implements UserActivityService {
 
         var user = userRepository.findById(putUserActivity.getUserId()).orElseThrow();
 
-        var duration = Duration.ofSeconds(putUserActivity.getSeconds());
-        var userActivity = new UserActivity();
+        var duration = Duration.ofSeconds(putUserActivity.getSeconds());                                    //Skapar ett Duration-objekt från antalet sekunder som angivits
+        var userActivity = new UserActivity();                                                              //Skapar nytt userActivity-objekt med aktivitet, poäng och tid
         userActivity.setActivity(putUserActivity.getActivity());
-        userActivity.setPoints((int) (putUserActivity.getActivity().getValue() * duration.toMinutes()));
-        userActivity.setDuration(duration);
+        userActivity.setPoints((int) (putUserActivity.getActivity().getValue() * duration.toMinutes()));    //Räknar ut totala poängen för aktiviteten
+        userActivity.setDuration(duration);                                                                 //Sätter tid för aktivitet
 
         System.out.println(putUserActivity);
         System.out.println(userActivity);
 
-        user.addUserActivity(userActivity);
+        user.addUserActivity(userActivity);                                                                 //Lägger till aktivitet i användares lista av aktiviteter
 
         userRepository.save(user); // Fungerar även som update och create
     }
@@ -68,8 +64,8 @@ public class UserActivityServiceImpl implements UserActivityService {
                 .map(user -> {
                     int totalPoints = user.getActivities().stream()
                             .filter(activity -> activity.getTimestamp().compareTo(now.toLocalDateTime()) > 1) //Filtrering av aktiviteter inom de senaste 7 dagarna
-                            .mapToInt(UserActivity::getPoints)
-                            .sum();
+                            .mapToInt(UserActivity::getPoints)  //Hämtar redan uträknat värde från createUserActivity
+                            .sum(); //Summerar samtliga poäng
                             System.out.println(String.format("%s, %s", user.getName(), totalPoints));
                     return new LeaderboardDTO(
                             user.getName(),

@@ -2,13 +2,14 @@ package com.example.App.model;
 
 
 public enum Activity {
-        GYM(50),
-        LÖPNING(25),
-        SIMNING(150),
-        GOLF(3),
-        FOTBOLL(30),
-        ISHOCKEY(30),
-        LÄNGDSKIDOR(400);
+        GYM(30),
+        LÖPNING(70),
+        SIMNING(60),
+        GOLF(27),
+        FOTBOLL(60),
+        ISHOCKEY(65),
+        LÄNGDSKIDOR(90),
+        PROMENAD(25);
 
         public int value;
         

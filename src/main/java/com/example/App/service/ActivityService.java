@@ -14,8 +14,14 @@ import com.example.App.model.Activity;
 public class ActivityService {               
 
     public List<ActivityDTO> getAllActivities() {
+
+        //Hämtar alla värden i enum Activity
         return Arrays.stream(Activity.values())
+
+        //Konverterar varje Activity-objekt till ett ActivityDTO
         .map(activity -> new ActivityDTO(activity.name(), activity.value))
+
+        //Listar alla ActivityDTO
         .toList();
     }
 

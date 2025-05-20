@@ -33,11 +33,13 @@ public class LoginCredentials {
     }
 
 
-    
+    //toString för utskrift och felsökning
     @Override
     public String toString() {
         return "LoginCredentials [name =" + name + ", email=" + email + ", password=" + password + "]";
     }
+
+    //Skapar ett nummer som representerar objektet. Används när objekt ska sparas i t.ex. HashMap eller HashSet.
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -47,6 +49,8 @@ public class LoginCredentials {
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         return result;
     }
+
+    //Returnerar true om alla fält (name, email, password) är lika.
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

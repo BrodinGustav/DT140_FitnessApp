@@ -2,9 +2,8 @@ package com.example.App.controller;
 
 import com.example.App.dto.UpdateUserDTO;
 import com.example.App.model.User;
-import com.example.App.repository.UserRepository;
+
 import com.example.App.response.SuccessResponse;
-import com.example.App.security.SecurityContext;
 import com.example.App.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,11 +15,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")

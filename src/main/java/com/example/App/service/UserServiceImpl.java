@@ -4,8 +4,6 @@ import java.time.OffsetDateTime;
 import java.util.AbstractMap;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.App.dto.UpdateUserDTO;
 import com.example.App.dto.WeeklyActivityPointsDTO;
 import com.example.App.execption.ResourceNotFoundException;
-import com.example.App.model.Activity;
 import com.example.App.model.User;
 import com.example.App.model.UserActivity;
 import com.example.App.repository.UserRepository;

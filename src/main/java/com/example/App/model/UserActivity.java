@@ -17,7 +17,6 @@ import java.time.Duration;
 public class UserActivity {
 
     // Properties
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,10 +26,11 @@ public class UserActivity {
     private LocalDateTime timestamp;
 
     // Relationer
-
     @Enumerated(EnumType.STRING)
     private Activity activity;
 
+
+    //Getter & Setter
     public Integer getId() {
         return id;
     }

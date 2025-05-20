@@ -7,20 +7,18 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
-@Profile("!nosecurity")
 public class JWTUtil {
 
     //Injicerar jwt_secret från application.properties
     @Value("${jwt_secret}")
     private String secret;
 
-    //Metod för att signera och skapa JWT genom injected jwt_secret
+    //Metod för att signera och skapa JWT genom injicerad jwt_secret
     public String generateToken(String email) throws IllegalArgumentException, JWTCreationException {
         return JWT.create()
                 .withSubject("User Details")

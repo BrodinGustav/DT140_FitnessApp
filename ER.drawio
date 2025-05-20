@@ -1,70 +1,65 @@
 <mxfile host="65bd71144e">
     <diagram id="FZSac_mE8ngayOiKKVst" name="Page-1">
-        <mxGraphModel dx="2927" dy="2196" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1832" dy="835" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="3" value="Users" style="whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="790" y="340" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="290" y="200" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="6" value="Activities" style="whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="-100" y="370" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="280" y="490" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="10" value="Password" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="920" y="210" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="210" y="90" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="11" value="Email" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="1000" y="260" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="330" y="90" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="14" value="Name" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="1010" y="380" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="410" y="130" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="15" value="UserID" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" parent="1" vertex="1">
-                    <mxGeometry x="810" y="190" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="160" y="150" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="16" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="15" target="3" edge="1">
+                <mxCell id="16" value="" style="endArrow=none;html=1;rounded=0;exitX=0.975;exitY=0.765;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="15" target="3" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="570" y="380" as="sourcePoint"/>
-                        <mxPoint x="730" y="380" as="targetPoint"/>
+                        <mxPoint x="280" y="170" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="17" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="10" target="3" edge="1">
+                <mxCell id="17" value="" style="endArrow=none;html=1;rounded=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" source="10" target="3" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="580" y="390" as="sourcePoint"/>
                         <mxPoint x="740" y="390" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="18" value="" style="endArrow=none;html=1;rounded=0;exitX=0.044;exitY=0.698;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" parent="1" source="11" target="3" edge="1">
+                <mxCell id="18" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" parent="1" source="11" target="3" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="590" y="400" as="sourcePoint"/>
                         <mxPoint x="750" y="400" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="20" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" parent="1" source="14" target="3" edge="1">
+                <mxCell id="20" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="14" target="3" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="610" y="420" as="sourcePoint"/>
                         <mxPoint x="770" y="420" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="24" value="Date" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="490" y="270" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="390" y="420" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="25" value="ActivityName" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="-290" y="255" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="230" y="570" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="27" value="ActivityID" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" parent="1" vertex="1">
-                    <mxGeometry x="-300" y="370" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="340" y="560" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="29" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" source="27" target="6" edge="1">
+                <mxCell id="29" value="" style="endArrow=none;html=1;rounded=0;exitX=0.33;exitY=-0.029;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" parent="1" source="27" target="6" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="-220" y="400" as="sourcePoint"/>
-                        <mxPoint x="370" y="420" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="30" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="25" target="6" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="220" y="430" as="sourcePoint"/>
-                        <mxPoint x="380" y="430" as="targetPoint"/>
+                        <mxPoint x="360" y="620" as="targetPoint"/>
+                        <Array as="points"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="31" value="" style="endArrow=none;html=1;rounded=0;entryX=0.857;entryY=0.668;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="24" target="54" edge="1">
@@ -76,7 +71,7 @@
                 <mxCell id="54" value="User_Activity" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
                     <mxGeometry x="270" y="360" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="55" value="" style="endArrow=none;html=1;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="3" target="54" edge="1">
+                <mxCell id="55" value="" style="endArrow=none;html=1;rounded=0;exitX=0.426;exitY=1.038;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="3" target="54" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="400" y="440" as="sourcePoint"/>
                         <mxPoint x="440" y="470" as="targetPoint"/>
@@ -84,37 +79,39 @@
                 </mxCell>
                 <mxCell id="56" value="M" style="resizable=0;html=1;whiteSpace=wrap;align=right;verticalAlign=bottom;" parent="55" connectable="0" vertex="1">
                     <mxGeometry x="1" relative="1" as="geometry">
-                        <mxPoint x="20" y="20" as="offset"/>
+                        <mxPoint x="18" y="2" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="57" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="6" target="54" edge="1">
+                <mxCell id="57" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="6" target="54" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="400" y="440" as="sourcePoint"/>
                         <mxPoint x="300" y="480" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="58" value="N" style="resizable=0;html=1;whiteSpace=wrap;align=right;verticalAlign=bottom;" parent="57" connectable="0" vertex="1">
-                    <mxGeometry x="1" relative="1" as="geometry"/>
+                    <mxGeometry x="1" relative="1" as="geometry">
+                        <mxPoint x="-6" y="18" as="offset"/>
+                    </mxGeometry>
                 </mxCell>
                 <mxCell id="123" value="UserActivityID" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="250" y="170" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="199.86" y="300" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="124" value="userID (FK till User)" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="340" y="202.69" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="360" y="300" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="125" value="activityID (FK till Activity)" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="450" y="220" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="425" y="350" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="127" value="Points" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-                    <mxGeometry x="160.28" y="230" width="79.72" height="50" as="geometry"/>
+                    <mxGeometry x="140.28" y="350" width="79.72" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="128" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="127" target="54" edge="1">
+                <mxCell id="128" value="" style="endArrow=none;html=1;rounded=0;entryX=0.086;entryY=0.431;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="127" target="54" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="727" y="210" as="sourcePoint"/>
                         <mxPoint x="777" y="350" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="129" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="123" target="54" edge="1">
+                <mxCell id="129" value="" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" source="123" target="54" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="270" y="323" as="sourcePoint"/>
                         <mxPoint x="321" y="379" as="targetPoint"/>
@@ -126,22 +123,32 @@
                         <mxPoint x="1041.52" y="357.3099999999999" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="131" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0.3;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="125" target="54" edge="1">
+                <mxCell id="131" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" parent="1" source="125" target="54" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="399" y="227" as="sourcePoint"/>
                         <mxPoint x="355" y="373" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="134" value="&lt;h3 class=&quot;&quot; data-end=&quot;1220&quot; data-start=&quot;1203&quot;&gt;&lt;/h3&gt;&lt;ol data-end=&quot;2152&quot; data-start=&quot;1221&quot;&gt;&lt;li class=&quot;&quot; data-end=&quot;1364&quot; data-start=&quot;1221&quot;&gt;&lt;p class=&quot;&quot; data-end=&quot;1301&quot; data-start=&quot;1224&quot;&gt;&lt;strong data-end=&quot;1236&quot; data-start=&quot;1224&quot;&gt;Category&lt;/strong&gt;: En kategori för aktiviteter (exempelvis &quot;Styrka&quot;, &quot;Kondition&quot;).&lt;/p&gt;&lt;ul data-end=&quot;1364&quot; data-start=&quot;1305&quot;&gt;&lt;li class=&quot;&quot; data-end=&quot;1330&quot; data-start=&quot;1305&quot;&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;1364&quot; data-start=&quot;1334&quot;&gt;&lt;p class=&quot;&quot; data-end=&quot;1364&quot; data-start=&quot;1336&quot;&gt;&lt;code data-end=&quot;1342&quot; data-start=&quot;1336&quot;&gt;name&lt;/code&gt;: Namnet på kategorin.&lt;/p&gt;&lt;/li&gt;&lt;br&gt;&lt;/ul&gt;&lt;br&gt;&lt;/li&gt;&lt;li class=&quot;&quot; data-end=&quot;1364&quot; data-start=&quot;1221&quot;&gt;&lt;p class=&quot;&quot; data-end=&quot;1301&quot; data-start=&quot;1224&quot;&gt;&lt;code data-end=&quot;1311&quot; data-start=&quot;1307&quot;&gt;id&lt;/code&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;: Primärnyckel (PK) (ENUM)&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;1631&quot; data-start=&quot;1366&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;1455&quot; data-start=&quot;1369&quot;&gt;&lt;strong data-end=&quot;1381&quot; data-start=&quot;1369&quot;&gt;Activity&lt;/strong&gt;: En aktivitet som en användare kan delta i (exempelvis &quot;Gym&quot;, &quot;Löpning&quot;).&lt;/p&gt;&lt;br&gt;&lt;ul data-end=&quot;1631&quot; data-start=&quot;1459&quot;&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;1484&quot; data-start=&quot;1459&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;1484&quot; data-start=&quot;1461&quot;&gt;&lt;code data-end=&quot;1465&quot; data-start=&quot;1461&quot;&gt;id&lt;/code&gt;: Primärnyckel (PK) (ENUM)&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;1520&quot; data-start=&quot;1488&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;1520&quot; data-start=&quot;1490&quot;&gt;&lt;code data-end=&quot;1496&quot; data-start=&quot;1490&quot;&gt;name&lt;/code&gt;: Namnet på aktiviteten.&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;1558&quot; data-start=&quot;1524&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;1558&quot; data-start=&quot;1526&quot;&gt;&lt;code data-end=&quot;1534&quot; data-start=&quot;1526&quot;&gt;points&lt;/code&gt;: Poäng för aktiviteten.&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;1631&quot; data-start=&quot;1562&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;1631&quot; data-start=&quot;1564&quot;&gt;&lt;code data-end=&quot;1577&quot; data-start=&quot;1564&quot;&gt;category_id&lt;/code&gt;: Främmande nyckel (FK) som refererar till &lt;code data-end=&quot;1630&quot; data-start=&quot;1620&quot;&gt;Category&lt;/code&gt;.&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;/ul&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;1748&quot; data-start=&quot;1633&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;1688&quot; data-start=&quot;1636&quot;&gt;&lt;strong data-end=&quot;1644&quot; data-start=&quot;1636&quot;&gt;User&lt;/strong&gt;: En användare som kan ha flera aktiviteter.&lt;/p&gt;&lt;br&gt;&lt;ul data-end=&quot;1748&quot; data-start=&quot;1692&quot;&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;1717&quot; data-start=&quot;1692&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;1717&quot; data-start=&quot;1694&quot;&gt;&lt;code data-end=&quot;1698&quot; data-start=&quot;1694&quot;&gt;id&lt;/code&gt;: Primärnyckel (PK)&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;1748&quot; data-start=&quot;1721&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;1748&quot; data-start=&quot;1723&quot;&gt;&lt;code data-end=&quot;1729&quot; data-start=&quot;1723&quot;&gt;name&lt;/code&gt;: Användarens namn.&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;/ul&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;2152&quot; data-start=&quot;1750&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;1915&quot; data-start=&quot;1753&quot;&gt;&lt;strong data-end=&quot;1769&quot; data-start=&quot;1753&quot;&gt;UserActivity&lt;/strong&gt;: En relationstabell mellan &lt;code data-end=&quot;1803&quot; data-start=&quot;1797&quot;&gt;User&lt;/code&gt; och &lt;code data-end=&quot;1818&quot; data-start=&quot;1808&quot;&gt;Activity&lt;/code&gt;. Den håller reda på vilka aktiviteter användaren har deltagit i och poängen för varje aktivitet.&lt;/p&gt;&lt;br&gt;&lt;ul data-end=&quot;2152&quot; data-start=&quot;1919&quot;&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;1944&quot; data-start=&quot;1919&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;1944&quot; data-start=&quot;1921&quot;&gt;&lt;code data-end=&quot;1925&quot; data-start=&quot;1921&quot;&gt;id&lt;/code&gt;: Primärnyckel (PK)&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;2009&quot; data-start=&quot;1948&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;2009&quot; data-start=&quot;1950&quot;&gt;&lt;code data-end=&quot;1959&quot; data-start=&quot;1950&quot;&gt;user_id&lt;/code&gt;: Främmande nyckel (FK) som refererar till &lt;code data-end=&quot;2008&quot; data-start=&quot;2002&quot;&gt;User&lt;/code&gt;.&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;2082&quot; data-start=&quot;2013&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;2082&quot; data-start=&quot;2015&quot;&gt;&lt;code data-end=&quot;2028&quot; data-start=&quot;2015&quot;&gt;activity_id&lt;/code&gt;: Främmande nyckel (FK) som refererar till &lt;code data-end=&quot;2081&quot; data-start=&quot;2071&quot;&gt;Activity&lt;/code&gt;.&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;2152&quot; data-start=&quot;2086&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;2152&quot; data-start=&quot;2088&quot;&gt;&lt;code data-end=&quot;2096&quot; data-start=&quot;2088&quot;&gt;points&lt;/code&gt;: Poäng som användaren har tjänat för en viss aktivitet.&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;/ul&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;/ol&gt;&lt;br&gt;&lt;h3 class=&quot;&quot; data-end=&quot;2169&quot; data-start=&quot;2154&quot;&gt;Relationer:&lt;/h3&gt;&lt;br&gt;&lt;ul data-end=&quot;2461&quot; data-start=&quot;2170&quot;&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;2222&quot; data-start=&quot;2170&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;2222&quot; data-start=&quot;2172&quot;&gt;En &lt;strong data-end=&quot;2187&quot; data-start=&quot;2175&quot;&gt;Category&lt;/strong&gt; kan ha flera &lt;strong data-end=&quot;2215&quot; data-start=&quot;2201&quot;&gt;Activities&lt;/strong&gt; (1:M).&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;2340&quot; data-start=&quot;2223&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;2340&quot; data-start=&quot;2225&quot;&gt;En &lt;strong data-end=&quot;2240&quot; data-start=&quot;2228&quot;&gt;Activity&lt;/strong&gt; kan ha flera &lt;strong data-end=&quot;2270&quot; data-start=&quot;2254&quot;&gt;UserActivity&lt;/strong&gt;-poster, vilket betyder att en aktivitet kan ha flera användare (M:N).&lt;/p&gt;&lt;br&gt;&lt;/li&gt;&lt;br&gt;&lt;li class=&quot;&quot; data-end=&quot;2461&quot; data-start=&quot;2341&quot;&gt;&lt;br&gt;&lt;p class=&quot;&quot; data-end=&quot;2461&quot; data-start=&quot;2343&quot;&gt;En &lt;strong data-end=&quot;2354&quot; data-start=&quot;2346&quot;&gt;User&lt;/strong&gt; kan ha flera &lt;strong data-end=&quot;2384&quot; data-start=&quot;2368&quot;&gt;UserActivity&lt;/strong&gt;-poster, vilket innebär att en användare kan delta i flera aktiviteter (M:N).&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="1310" y="-550" width="860" height="1820" as="geometry"/>
+                <mxCell id="135" value="Duration" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
+                    <mxGeometry x="170.14" y="410" width="79.72" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="135" value="Duration" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
-                    <mxGeometry x="110" y="295" width="79.72" height="50" as="geometry"/>
-                </mxCell>
-                <mxCell id="136" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.156;entryY=0.3;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="135" target="54">
+                <mxCell id="136" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" parent="1" source="135" target="54" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="231" y="286" as="sourcePoint"/>
                         <mxPoint x="321" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="139" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="323" width="20" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="140" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.578;entryY=1.039;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="24" target="24" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="145" value="" style="endArrow=none;html=1;rounded=0;exitX=0.721;exitY=-0.041;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" parent="1" source="25" target="6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="345" y="565" as="sourcePoint"/>
+                        <mxPoint x="327" y="536" as="targetPoint"/>
+                        <Array as="points"/>
                     </mxGeometry>
                 </mxCell>
             </root>

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +39,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // POST för register
+    //Registrering
     @PostMapping("/register")
     public ResponseEntity<RegisterDTO> registerHandler(@RequestBody @Valid User user) {
 
@@ -72,10 +71,6 @@ public class AuthController {
             // Returnera namn, email och token
             return ResponseEntity.ok(new RegisterDTO(user.getName(), user.getEmail(), token));
 
-            /*
-             * Svarar with JWT
-             * return Collections.singletonMap("jwt-token", token);
-             */
 
         } catch (Exception e) {
 
@@ -85,7 +80,7 @@ public class AuthController {
 
     }
 
-    // Definierar funktion som hanterar POST rutt för att logga in en user
+    //Logga in
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> loginHandler(@RequestBody @Valid LoginCredentials body) {
         try {
@@ -95,7 +90,7 @@ public class AuthController {
             UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
                     body.getEmail(), body.getPassword());
 
-            // Authenticating the Login Credentials
+            // Autentisierar Login Credentials
             authManager.authenticate(authInputToken);
 
             // Hämta användaren från databasen
@@ -115,7 +110,6 @@ public class AuthController {
 
             return ResponseEntity.ok(response);
 
-            /* return Collections.singletonMap("jwt-token", token); */
 
         } catch (AuthenticationException authExc) {
 
