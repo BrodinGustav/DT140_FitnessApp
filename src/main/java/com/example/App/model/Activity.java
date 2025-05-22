@@ -8,8 +8,7 @@ public enum Activity {
         GOLF(27),
         FOTBOLL(60),
         ISHOCKEY(65),
-        LÄNGDSKIDOR(90),
-        PROMENAD(25);
+        LÄNGDSKIDOR(90);
 
         public int value;
         
