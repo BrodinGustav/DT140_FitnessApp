@@ -12,6 +12,7 @@ import com.example.App.dto.LeaderboardDTO;
 import com.example.App.model.UserActivity;
 import com.example.App.repository.UserActivityRepository;
 import com.example.App.response.SuccessResponse;
+import com.example.App.security.SecurityContext;
 import com.example.App.service.UserActivityService;
 import jakarta.validation.Valid;
 
@@ -54,9 +55,10 @@ public class UserActivityController {
 
     // GET via id
 
-    @GetMapping("/{id}")
+    @GetMapping("/{me}")
 
-    public ResponseEntity<SuccessResponse<UserActivity>> getUserActivityById(@PathVariable Integer id) {
+    public ResponseEntity<SuccessResponse<UserActivity>> getUserActivityById() {
+         var id = SecurityContext.getThreadLocal().getId();
         UserActivity userActivity = userActivityRepository.getUserActivityById(id);
         SuccessResponse<UserActivity> response = new SuccessResponse<>(
                 "Användaraktivitet med ID " + id + " har hämtats", userActivity);

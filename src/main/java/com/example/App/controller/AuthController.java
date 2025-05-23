@@ -39,7 +39,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    //Registrering
+    // Registrering
     @PostMapping("/register")
     public ResponseEntity<RegisterDTO> registerHandler(@RequestBody @Valid User user) {
 
@@ -49,6 +49,12 @@ public class AuthController {
             if (userRepository.existsByEmail(user.getEmail())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new RegisterDTO("Användare finns redan.", "", ""));
+            }
+
+            // Kontroll om användarnamn redan finns
+            if (userRepository.existsByname(user.getName())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new RegisterDTO("Användarnamn är redan upptaget.", "", ""));
             }
 
             // Encoding Password med Bcrypt
@@ -71,7 +77,6 @@ public class AuthController {
             // Returnera namn, email och token
             return ResponseEntity.ok(new RegisterDTO(user.getName(), user.getEmail(), token));
 
-
         } catch (Exception e) {
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -80,7 +85,7 @@ public class AuthController {
 
     }
 
-    //Logga in
+    // Logga in
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> loginHandler(@RequestBody @Valid LoginCredentials body) {
         try {
@@ -110,23 +115,21 @@ public class AuthController {
 
             return ResponseEntity.ok(response);
 
-
         } catch (AuthenticationException authExc) {
 
-            //401-meddelande ifall autentisering misslyckas
+            // 401-meddelande ifall autentisering misslyckas
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("message", "Fel användarnamn/lösenord");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
-        
-         } catch (Exception e) {
 
-            //500-meddelande ifall generellt fel
+        } catch (Exception e) {
+
+            // 500-meddelande ifall generellt fel
 
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("Message", "Serverfel.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-         }}
-
-          
+        }
+    }
 
 }

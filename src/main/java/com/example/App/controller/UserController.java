@@ -23,10 +23,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/{me}")
 
-    public ResponseEntity<SuccessResponse<User>> getUser(@PathVariable Integer id) {
-        User user = userService.getUserById(id);
+    public ResponseEntity<SuccessResponse<User>> getCurrentUser() {
+        var id = SecurityContext.getThreadLocal().getId();          //Hämtar inloggad användares ID
+        User user = userService.getUserById(id);                    //Hämtar användaren från databasen
         SuccessResponse<User> response = new SuccessResponse<>("Användaren med ID " + id + " har hämtats", user);
         return ResponseEntity.ok(response);
     }
@@ -37,8 +38,9 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{id}/weekly-activity-points")
-    public ResponseEntity<List<WeeklyActivityPointsDTO>> getWeeklyPointsByActivity(@PathVariable Integer id) {
+    @GetMapping("/me/weekly-activity-points")
+    public ResponseEntity<List<WeeklyActivityPointsDTO>> getWeeklyPointsByActivity() {
+         var id = SecurityContext.getThreadLocal().getId();
         var result = userService.getWeeklyPointsByActivityForUser(id);
         return ResponseEntity.ok(result);
     }
@@ -51,9 +53,10 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{me}")
 
-    public ResponseEntity<SuccessResponse<User>> deleteUser(@PathVariable int id) {
+    public ResponseEntity<SuccessResponse<User>> deleteCurrentUser() {
+          var id = SecurityContext.getThreadLocal().getId();
         userService.deleteUser(id);
         SuccessResponse<User> response = new SuccessResponse<>("Användaren med ID " + id + " har raderats.");
         return ResponseEntity.ok(response);
