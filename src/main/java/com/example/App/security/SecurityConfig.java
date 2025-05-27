@@ -57,13 +57,13 @@ public class SecurityConfig {
                                 .build();
         }
 
-        // Skapar bean för password encoder
+        // Krypterar lösenord
         @Bean
         public PasswordEncoder passwordEncoder() {
                 return new BCryptPasswordEncoder();
         }
 
-        // Exponerar bean av authentication manager vilken kör authentication processen
+        // Kontrollerar att användarens inloggning är korrekt enligt authentication manager
         @Bean
         public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
                         throws Exception {
