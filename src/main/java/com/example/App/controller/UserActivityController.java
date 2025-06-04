@@ -45,7 +45,7 @@ public class UserActivityController {
         return ResponseEntity.ok(activities);
     }
 
-    // Test med stream för GET
+    // GET för poäng till LeaderBoard
     @GetMapping("/stream")
     @Transactional(readOnly = true)
     public ResponseEntity<List<LeaderboardDTO>> totalResultat() {

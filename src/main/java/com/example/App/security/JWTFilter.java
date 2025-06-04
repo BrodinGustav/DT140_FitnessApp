@@ -19,8 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component // Komponent. Spring Boot skapar och hanterar JWTFilter Bean
-// JWTFilter bean kan nu injectas i andra delar av koden
+@Component 
 public class JWTFilter extends OncePerRequestFilter {
 
     // Injecting Dependencies

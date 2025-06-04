@@ -43,7 +43,7 @@ public class UserActivityServiceImpl implements UserActivityService {
 
         user.addUserActivity(userActivity);                                                                 //Lägger till aktivitet i användares lista av aktiviteter
 
-        userRepository.save(user); // Fungerar även som update och create
+        userRepository.save(user); 
     }
 
 
@@ -63,7 +63,7 @@ public class UserActivityServiceImpl implements UserActivityService {
         return userList.stream()
                 .map(user -> {
                     int totalPoints = user.getActivities().stream()
-                            .filter(activity -> activity.getTimestamp().compareTo(now.toLocalDateTime()) > 1) //Filtrering av aktiviteter inom de senaste 7 dagarna
+                            .filter(activity -> activity.getTimestamp().isAfter(now.toLocalDateTime())) //Filtrering av aktiviteter inom de senaste 7 dagarna
                             .mapToInt(UserActivity::getPoints)  //Hämtar redan uträknat värde från createUserActivity
                             .sum(); //Summerar samtliga poäng
                             System.out.println(String.format("%s, %s", user.getName(), totalPoints));

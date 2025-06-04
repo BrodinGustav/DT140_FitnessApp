@@ -19,16 +19,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     // Properties
-
     private Integer id;
-
     private String name;
-
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // Undviker att lösenordet inkluderas i JSON-svaret
     private String password;
-
 
     // Konstruktor
     protected User() {
@@ -41,13 +37,11 @@ public class User {
     }
 
     // Relationer
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "id")
     private List<UserActivity> activities;
 
     // Getters and setters
-
     public List<UserActivity> userActivities() {
         return this.activities;
     }
