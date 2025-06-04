@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
     
         // Hämtar användaraktiviteter (Gruppera aktiviteter efter aktivitetstyp och summera poäng baserat på varaktigheten)
         var activityToPoints = user.getActivities().stream()
-            .filter(activity -> activity.getTimestamp().compareTo(now.toLocalDateTime()) > 0) // Endast senaste 7 dagar
+            .filter(activity -> activity.getTimestamp().isAfter(now.toLocalDateTime())) // Endast senaste 7 dagar
            // Grupperar användaraktiviteter
             .collect(Collectors.groupingBy(
                 UserActivity::getActivity,
