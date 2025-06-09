@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.Duration;
+import java.time.LocalDate;
 
 @Entity
 public class UserActivity {
@@ -24,6 +25,7 @@ public class UserActivity {
     private Duration duration;
     @CreationTimestamp
     private LocalDateTime timestamp;
+    private LocalDate date;
 
     // Relationer
     @Enumerated(EnumType.STRING)
@@ -58,6 +60,16 @@ public class UserActivity {
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
+
+        public LocalDate getDate() {
+    return date;
+}
+
+public void setDate(LocalDate date) {
+    this.date = date;
+}
+
+
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;

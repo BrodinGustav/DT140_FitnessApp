@@ -1,5 +1,7 @@
 package com.example.App.dto;
 
+import java.time.LocalDate;
+
 import org.springframework.validation.annotation.Validated;
 
 import com.example.App.model.Activity;
@@ -10,7 +12,7 @@ import jakarta.validation.constraints.NotNull;
 @Validated
 public class CreateUserActivityDTO {
 
-    //Properties
+    // Properties
     @NotNull
     private Integer userId;
     @Valid
@@ -18,15 +20,28 @@ public class CreateUserActivityDTO {
     @NotNull
     private Integer seconds;
 
+    private LocalDate date;
+
     public Integer getUserId() {
         return userId;
     }
+
     public Activity getActivity() {
         return activity;
     }
+
     public Integer getSeconds() {
         return seconds;
     }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -36,6 +51,7 @@ public class CreateUserActivityDTO {
         result = prime * result + ((seconds == null) ? 0 : seconds.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -64,5 +80,5 @@ public class CreateUserActivityDTO {
     public String toString() {
         return "PutUserActivityDTO [userId=" + userId + ", activityName=" + activity + ", duration=" + seconds + "]";
     }
-    
+
 }

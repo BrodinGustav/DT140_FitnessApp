@@ -37,6 +37,7 @@ public class UserActivityServiceImpl implements UserActivityService {
         userActivity.setActivity(putUserActivity.getActivity());
         userActivity.setPoints((int) (putUserActivity.getActivity().getValue() * duration.toMinutes()));    //Räknar ut totala poängen för aktiviteten
         userActivity.setDuration(duration);                                                                 //Sätter tid för aktivitet
+        userActivity.setDate(putUserActivity.getDate());
 
         System.out.println(putUserActivity);
         System.out.println(userActivity);
